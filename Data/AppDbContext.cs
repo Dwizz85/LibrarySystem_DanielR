@@ -34,6 +34,6 @@ public class AppDbContext : DbContext
         .HasForeignKey(aid => aid.AuthorID);    // Foreign Key => AuthorID
 
         modelBuilder.Entity<Loan>()
-        .HasKey(l => l.LoanID);      
+        .HasKey(l => l.LoanID);                 // Primary Key => Loans
     }
 }
