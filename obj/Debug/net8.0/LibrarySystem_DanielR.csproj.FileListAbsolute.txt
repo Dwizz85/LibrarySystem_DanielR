@@ -155,3 +155,4 @@ C:\Users\danie\Desktop\School\LibraryProject\LibrarySystem_DanielR\obj\Debug\net
 C:\Users\danie\Desktop\School\LibraryProject\LibrarySystem_DanielR\obj\Debug\net8.0\LibrarySystem_DanielR.pdb
 C:\Users\danie\Desktop\School\LibraryProject\LibrarySystem_DanielR\obj\Debug\net8.0\LibrarySystem_DanielR.genruntimeconfig.cache
 C:\Users\danie\Desktop\School\LibraryProject\LibrarySystem_DanielR\obj\Debug\net8.0\ref\LibrarySystem_DanielR.dll
+C:\Users\danie\Desktop\School\LibraryProject\LibrarySystem_DanielR\obj\Debug\net8.0\LibrarySystem_DanielR.sourcelink.json

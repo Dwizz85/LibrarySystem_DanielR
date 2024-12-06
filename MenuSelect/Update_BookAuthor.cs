@@ -68,6 +68,7 @@ public class UpdateAuthor
             {
                 updateAuthor.LastName = _lastName;
             }
+            
             context.SaveChanges();
             System.Console.WriteLine("Author is updated: {_firstName} {_lastName}.");
         }

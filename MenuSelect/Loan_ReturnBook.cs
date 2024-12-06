@@ -15,19 +15,28 @@ public class LoanBook   // class to loan => book => relate => member
                 .ThenInclude(a => a.Author)
                 .ToList();
         
-        if (!Books.Any())
-        {
-            System.Console.WriteLine("No books available for loan at this moment!");
-            return;
-        }
+            if (!Books.Any())
+            {
+                System.Console.WriteLine("No books available for loan at this moment!");
+                return;
+            }
 
-        foreach (var _book in Books)
-        {
-            var authors = string.Join(",", _book.BookAuthors.Select(ba => $"{ba.Author.FirstName} {ba.Author.LastName}"));
-            System.Console.WriteLine($"Book ID: {_book.BookId, -10} Title: {_book.Title, -40} Authors: {authors}");   
-        }
+            foreach (var _book in Books)
+            {
+                var authors = string.Join(",", _book.BookAuthors.Select(ba => $"{ba.Author.FirstName} {ba.Author.LastName}"));
+                System.Console.WriteLine($"Book ID: {_book.BookId, -10} Title: {_book.Title, -40} Authors: {authors}");   
+            }
         }
     }
+}
 
+public class ReturnBook
+{
+    public static void Run()
+    {
+        using (var context = new AppDbContext())
+        {
 
+        }
+    }
 }

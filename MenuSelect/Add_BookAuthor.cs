@@ -12,6 +12,13 @@ public class AddBook        // class => add book => Create => CRUD
 
             System.Console.WriteLine("Enter Title: ");
             var _title = Console.ReadLine()?.Trim();
+
+            if (string.IsNullOrEmpty(_title))
+            {
+                System.Console.WriteLine("You must enter a Title for the Book!");
+                return;
+            }
+            
             System.Console.WriteLine("Enter Year Published (yyyy): ");
             var _yearPublished = Console.ReadLine()?.Trim();
 

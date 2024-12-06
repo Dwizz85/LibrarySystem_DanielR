@@ -29,6 +29,7 @@ public class AddRelations   // class to set relation => Book => Author
         context.BookAuthors.Add(BookAuthor);
         context.SaveChanges();
         System.Console.WriteLine("BookAuthor have a new relation!\n New relation between BookID: {bookID} and AuthorID: {authorID}. ");
+        
         }
     }
 }

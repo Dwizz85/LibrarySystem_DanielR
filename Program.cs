@@ -1,2 +1,18 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using System;
+using LibrarySystem_DanielR;
+
+
+namespace LibrarySystem_DanielR
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            // Instantiate MainMenuIndex
+            var mainMenu = new MainMenuIndex();
+
+            // Run the Main Menu
+            mainMenu.MainMenu();
+        }
+    }
+}
