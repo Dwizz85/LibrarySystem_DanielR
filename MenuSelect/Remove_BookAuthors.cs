@@ -17,6 +17,7 @@ public class RemoveBook      // class to delete => targeted data => Library => C
             }
             
             System.Console.WriteLine("Enter ID for the book you want to remove!");
+
             var _input = Console.ReadLine();
 
             if (!int.TryParse(_input, out var bookID))
@@ -25,6 +26,7 @@ public class RemoveBook      // class to delete => targeted data => Library => C
             }
 
             var removeBook = context.Books.FirstOrDefault(b => b.BookId == bookID);
+
             if (removeBook == null)
             {
                 System.Console.WriteLine("ID not found, please try again!");
@@ -40,6 +42,7 @@ public class RemoveBook      // class to delete => targeted data => Library => C
                 System.Console.WriteLine("Warning - Book has connection to multiple Authors and will be removed!");
 
                 context.BookAuthors.RemoveRange(matchedBookAuthor);
+
                 System.Console.WriteLine("Hit any key to continue!");
                 Console.ReadLine();
             }
@@ -68,6 +71,7 @@ public class RemoveAuthor
             }
 
             System.Console.WriteLine("Enter ID for the Author you want to remove:");
+
             var _input = Console.ReadLine()?.Trim();
 
             if (!int.TryParse(_input, out var authorID))
@@ -77,6 +81,7 @@ public class RemoveAuthor
             }
 
             var removeAuthor = context.Authors.FirstOrDefault(a => a.AuthorId == authorID);
+            
             if (removeAuthor == null)
             {
                 System.Console.WriteLine("ID not found, please try again!");

@@ -13,11 +13,15 @@ namespace LibrarySystem_DanielR
             while (isRunning)
             {
                 Console.Clear(); // Clear the console for readability
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
                 Console.WriteLine("========================================");
-                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.ResetColor();
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
                 Console.WriteLine("       Member Administration Menu");
                 Console.ResetColor();
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
                 Console.WriteLine("========================================");
+                Console.ResetColor();
                 Console.WriteLine();
                 Console.WriteLine("  1. Register Member");
                 Console.WriteLine("  2. Update Member\n");
@@ -25,7 +29,9 @@ namespace LibrarySystem_DanielR
                 Console.WriteLine("  3. Return to Main Menu");
                 Console.ResetColor();
                 Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
                 Console.WriteLine("========================================");
+                Console.ResetColor();
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
                 Console.Write("Enter your choice: ");
                 Console.ResetColor();

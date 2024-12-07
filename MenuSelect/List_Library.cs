@@ -18,7 +18,10 @@ public class ListLibrary            // class => lists => content => library
             System.Console.WriteLine("Library Listing => Author with Books:");
             foreach (var _book in BookAuthor)
             {
-                var _authors = string.Join(", ", _book.BookAuthors.Select(ba => $"{ba.Author.FirstName} {ba.Author.LastName}"));
+                var _authors = _book.BookAuthors.Any()
+                ? string.Join(", ", _book.BookAuthors.Select(ba => $"{ba.Author.FirstName} {ba.Author.LastName}"))
+                : "No Authors";
+
                 System.Console.WriteLine($"Book: {_book.Title} Author: {_authors}");
                 
             }
@@ -33,28 +36,33 @@ public class LoanHistory
 
         using (var context = new AppDbContext())
         {
-            var LoanHistory = context.Loans
-            .Include(l => l.Book)
-            .ThenInclude(ba => ba.BookAuthors)
-            .Select(lh => new
-            {
-                lh.Book.Title,
-                lh.Member.MemberID,
-                lh.LoanDate,
-                lh.ReturnDate,
-                lh.IsReturned
+            var loanHistory = context.Loans
+                .Include(l => l.Book)
+                .ThenInclude(b => b.BookAuthors)
+                .Include(l => l.Member)
+                .Select(lh => new
+                {
+                    lh.Book.Title,
+                    lh.Member.MemberID,
+                    lh.LoanDate,
+                    ReturnDate = lh.ReturnDate.ToString("yyyy-MM-dd") ?? "Not Returned",
+                    lh.IsReturned
+                })
+                .ToList();
 
-            }).ToList();
-            foreach (var item in LoanHistory)
+            foreach (var item in loanHistory)
             {
-                System.Console.WriteLine($"{"Title:", -10} {item.Title}");
-                System.Console.WriteLine($"{"Member ID:", -10} {item.MemberID}");
-                System.Console.WriteLine($"{"Loan Date:", -10} {item.LoanDate}");
-                System.Console.WriteLine($"{"Return Date:", -10} {item.ReturnDate}");
-                System.Console.WriteLine($"{"Is Returned", -10} {(item.IsReturned ? "Yes" : "No")}");
+                Console.WriteLine($"{"Title:",-15} {item.Title}");
+                Console.WriteLine($"{"Member ID:",-15} {item.MemberID}");
+                Console.WriteLine($"{"Loan Date:",-15} {item.LoanDate:yyyy-MM-dd}");
+                Console.WriteLine($"{"Return Date:",-15} {item.ReturnDate}");
+                Console.WriteLine($"{"Is Returned:",-15} {(item.IsReturned ? "Yes" : "No")}");
+                Console.WriteLine(new string('-', 40)); // Separator between record
             }
+            
             System.Console.WriteLine("Press any key to return to Menu");
         }
+
         Console.ReadLine();
     }
 }

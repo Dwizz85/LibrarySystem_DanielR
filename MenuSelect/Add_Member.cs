@@ -11,52 +11,70 @@ public class AddMember
 
         using (var context = new AppDbContext())
         {
-            while (true)
+            bool isRunning = true;
+
+            while (isRunning)
             {
+                Console.WriteLine("Adding New Member:");
+                Console.WriteLine("__________________\n");
 
-                System.Console.WriteLine("Adding New Member:");
-                System.Console.WriteLine("__________________\n");
-                System.Console.WriteLine("1: Enter First Name:");
-                var _firstName = Console.ReadLine()?.Trim();
-                System.Console.WriteLine("2: Enter Last Name:");
-                var _lastName = Console.ReadLine()?.Trim();
+                var _firstName = GetInput("1: Enter First Name:");
+                var _lastName = GetInput("2: Enter Last Name:");
 
-                if (string.IsNullOrEmpty(_firstName ) || string.IsNullOrEmpty(_lastName))
+                if (string.IsNullOrWhiteSpace(_firstName) || string.IsNullOrWhiteSpace(_lastName))
                 {
-                    System.Console.WriteLine("First and Last name must be entered!");
+                    Console.WriteLine("First and Last name must be entered!");
                     continue;
                 }
 
-                var _member = context.Members
-                    .FirstOrDefault(b => b.FirstName == _firstName && b.LastName == _lastName);
+                // Check if member already exists
+                var _existingMember = context.Members
+                    .FirstOrDefault(m => m.FirstName == _firstName && m.LastName == _lastName);
 
-                if (_member == null)
+                if (_existingMember != null)
                 {
-                    System.Console.WriteLine("Member is not in the database and can be registerd!");
+                    Console.WriteLine($"Member '{_firstName} {_lastName}' already exists in the database.");
+                    Console.WriteLine("Returning to menu.");
+                    return; // Exit if the member already exists
                 }
 
-                System.Console.WriteLine("3: Enter Email:");
-                var _email = Console.ReadLine()?.Trim();
+                var _email = GetInput("3: Enter Email:");
 
-                if (string.IsNullOrEmpty(_email))
+                if (string.IsNullOrWhiteSpace(_email))
                 {
-                    System.Console.WriteLine("Please enter Email adress!");
+                    Console.WriteLine("Please enter an Email address!");
                     continue;
                 }
 
-                _member = new Member
+                // Confirm details before saving
+                Console.WriteLine($"Confirm adding the member:\nFirst Name: {_firstName}\nLast Name: {_lastName}\nEmail: {_email}\n(y/n):");
+                var confirmation = Console.ReadLine()?.Trim().ToLower();
+                if (confirmation != "y")
+                {
+                    Console.WriteLine("Action canceled.");
+                    continue;
+                }
+
+                // Create and save the new member
+                var _member = new Member
                 {
                     FirstName = _firstName,
                     LastName = _lastName,
                     Email = _email
                 };
-                
+
                 context.Members.Add(_member);
                 context.SaveChanges();
-                System.Console.WriteLine($"Member: '{_firstName} {_lastName}, {_email} registered!");
-                System.Console.WriteLine("And so it begins.. The time of the book loaning is here!");
-                return;                       
+                Console.WriteLine($"Member '{_firstName} {_lastName}' with Email '{_email}' has been registered!");
+                Console.WriteLine("And so it begins... The time of book loaning is here!");
+
+                isRunning = false; // Exit the loop
             }
+                string GetInput(string message)
+                {
+                    Console.WriteLine(message);
+                    return Console.ReadLine()?.Trim();
+                }
         }
     }
 }

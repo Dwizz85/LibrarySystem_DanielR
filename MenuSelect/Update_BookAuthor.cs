@@ -43,6 +43,7 @@ public class UpdateAuthor
         using (var context = new AppDbContext())
         {
             var Authors = context.Authors.ToList();
+            
             System.Console.WriteLine("Enter Author ID: ");
 
             if (!int.TryParse(Console.ReadLine(), out var AuthorID))
@@ -58,12 +59,14 @@ public class UpdateAuthor
             System.Console.WriteLine($"Author name: {updateAuthor.FirstName} {updateAuthor.LastName}");
 
             var _firstName = Console.ReadLine();
+
             if (!string.IsNullOrWhiteSpace(_firstName))
             {
                 updateAuthor.FirstName = _firstName;
             }
 
             var _lastName = Console.ReadLine();
+
             if (!string.IsNullOrWhiteSpace(_lastName))
             {
                 updateAuthor.LastName = _lastName;

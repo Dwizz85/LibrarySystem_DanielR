@@ -13,11 +13,15 @@ namespace LibrarySystem_DanielR
             while (isRunning)
             {
                 Console.Clear(); // Clear the screen for readability
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
                 Console.WriteLine("========================================");
+                Console.ResetColor();
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine("          Welcome to DA Library!");
                 Console.ResetColor();
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
                 Console.WriteLine("========================================");
+                Console.ResetColor();
                 Console.WriteLine();
                 Console.WriteLine("  1. Loan Book");
                 Console.WriteLine("  2. Return Loans");
@@ -28,7 +32,9 @@ namespace LibrarySystem_DanielR
                 Console.WriteLine("  6. Exit Program");
                 Console.ResetColor();
                 Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
                 Console.WriteLine("========================================");
+                Console.ResetColor();
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
                 Console.Write("Enter your choice: ");
                 Console.ResetColor();
