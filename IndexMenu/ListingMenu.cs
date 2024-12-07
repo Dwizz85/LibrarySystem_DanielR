@@ -61,17 +61,17 @@ namespace LibrarySystem_DanielR
                     Console.WriteLine("Listing Loans...");
                     break;
                 case 2:
-                    Console.WriteLine("Listing Loan History...");
+                    LoanHistory.Run();          // Runs Loan history
                     break;
                 case 3:
                     Console.WriteLine("Listing Registered Books...");
                     break;
                 case 4:
-                    Console.WriteLine("Listing Authors with Books...");
+                    ListLibrary.Run();
                     break;
                 case 5:
                     Console.WriteLine("\nReturning to Main Menu...");
-                    return false; // Exit the ListingMenu loop
+                    return false;               // Exit the ListingMenu loop
                 default:
                     Console.WriteLine("Invalid choice. Please try again.");
                     break;

@@ -35,5 +35,9 @@ public class AppDbContext : DbContext
 
         modelBuilder.Entity<Loan>()
         .HasKey(l => l.LoanID);                 // Primary Key => Loans
+
+        modelBuilder.Entity<Book>()
+        .Property(b => b.YearPublished)
+        .HasColumnType("int"); // Explicitly set to int if needed
     }
 }

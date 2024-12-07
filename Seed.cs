@@ -24,63 +24,63 @@ public class Seed
                     var book1 = new Book
                     {
                         Title = "To Kill a Mockingbird",
-                        YearPublished = new DateOnly(1960, 7, 11),
+                        YearPublished = 1990,
                         IsAvailable = true
                     };
 
                     var book2 = new Book
                     {
                         Title = "1984",
-                        YearPublished = new DateOnly(1949, 6, 8),
+                        YearPublished = 1949,
                         IsAvailable = true
                     };
 
                     var book3 = new Book
                     {
                         Title = "Pride and Prejudice",
-                        YearPublished = new DateOnly(1813, 1, 28),
+                        YearPublished = 1813,
                         IsAvailable = true
                     };
 
                     var book4 = new Book
                     {
                         Title = "Art of War",
-                        YearPublished = new DateOnly(1452, 3, 12),
+                        YearPublished = 1452,
                         IsAvailable = true
                     };
 
                     var book5 = new Book
                     {
                         Title = "Harry Potter and the Philosopher's Stone",
-                        YearPublished = new DateOnly(1997, 6, 26),
+                        YearPublished = 1997,
                         IsAvailable = true
                     };
 
                     var book6 = new Book
                     {
                         Title = "The Hobbit",
-                        YearPublished = new DateOnly(1937, 9, 21),
+                        YearPublished = 1937,
                         IsAvailable = true
                     };
 
                     var book7 = new Book
                     {
                         Title = "Brave New World",
-                        YearPublished = new DateOnly(1932, 8, 18),
+                        YearPublished = 1932,
                         IsAvailable = true
                     };
 
                     var book8 = new Book
                     {
                         Title = "Animal Farm",
-                        YearPublished = new DateOnly(1945, 8, 17),
+                        YearPublished = 1945,
                         IsAvailable = true
                     };
 
                     var book9 = new Book
                     {
                         Title = "Emma",
-                        YearPublished = new DateOnly(1815, 12, 23),
+                        YearPublished = 1815,
                         IsAvailable = true
                     };
 

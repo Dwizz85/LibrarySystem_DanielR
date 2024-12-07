@@ -39,7 +39,7 @@ namespace LibrarySystem_DanielR.Migrations
 
                     b.HasKey("AuthorId");
 
-                    b.ToTable("Authors");
+                    b.ToTable("Authors", (string)null);
                 });
 
             modelBuilder.Entity("LibrarySystem_DanielR.Book", b =>
@@ -62,7 +62,7 @@ namespace LibrarySystem_DanielR.Migrations
 
                     b.HasKey("BookId");
 
-                    b.ToTable("Books");
+                    b.ToTable("Books", (string)null);
                 });
 
             modelBuilder.Entity("LibrarySystem_DanielR.BookAuthor", b =>
@@ -85,7 +85,7 @@ namespace LibrarySystem_DanielR.Migrations
 
                     b.HasIndex("BookID");
 
-                    b.ToTable("BookAuthors");
+                    b.ToTable("BookAuthors", (string)null);
                 });
 
             modelBuilder.Entity("LibrarySystem_DanielR.Loan", b =>
@@ -117,7 +117,7 @@ namespace LibrarySystem_DanielR.Migrations
 
                     b.HasIndex("MemberID");
 
-                    b.ToTable("Loans");
+                    b.ToTable("Loans", (string)null);
                 });
 
             modelBuilder.Entity("LibrarySystem_DanielR.Member", b =>
@@ -142,7 +142,7 @@ namespace LibrarySystem_DanielR.Migrations
 
                     b.HasKey("MemberID");
 
-                    b.ToTable("Members");
+                    b.ToTable("Members", (string)null);
                 });
 
             modelBuilder.Entity("LibrarySystem_DanielR.BookAuthor", b =>

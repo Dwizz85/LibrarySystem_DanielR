@@ -59,45 +59,39 @@ namespace LibrarySystem_DanielR
             switch (menuSel)
             {
                 case 1:
-                    Console.WriteLine("Registering a new Book...");
-                    // Call method to register a new book
+                    AddBook.Run();          // Call method to register a new book
                     break;
                 case 2:
-                    Console.WriteLine("Registering a new Author...");
-                    // Call method to register a new author
+                    AddAuthor.Run();        // Call method to register a new author
                     break;
                 case 3:
-                    Console.WriteLine("Adding relations to Author => Book...");
-                    // Call method to add author-book relations
+                    AddRelations.Run();     // Call method to add author-book relations
                     break;
                 case 4:
-                    Console.WriteLine("Updating Book info...");
-                    // Call method to update book info
+                    UpdateBook.Run();       // Call method to update book info
                     break;
                 case 5:
-                    Console.WriteLine("Updating Author...");
-                    // Call method to update author info
+                    UpdateAuthor.Run();     // Call method to update author info
                     break;
                 case 6:
-                    Console.WriteLine("Removing an Author...");
-                    // Call method to remove an author
+                    RemoveAuthor.Run();     // Call method to remove an author
                     break;
                 case 7:
-                    Console.WriteLine("Removing a Book...");
-                    // Call method to remove a book
+                    RemoveBook.Run();       // Call method to remove a book
                     break;
                 case 8:
                     Console.WriteLine("\nReturning to Main Menu...");
-                    return false; // Exit the loop and return to Main Menu
+                    return false;           
                 default:
                     Console.WriteLine("Invalid choice, please try again!");
                     break;
             }
+
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine("\nPress any key to continue...");
             Console.ResetColor();
             Console.ReadKey();
-            return true; // Keep the loop running
+            return true;              // Keep the loop running
         }
     }
 }

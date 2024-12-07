@@ -22,15 +22,9 @@ public class AddBook        // class => add book => Create => CRUD
             System.Console.WriteLine("Enter Year Published (yyyy): ");
             var _yearPublished = Console.ReadLine()?.Trim();
 
-                if (!DateOnly.TryParse(_yearPublished, out DateOnly YearPublished))
+                if (!int.TryParse(_yearPublished, out int YearPublished))
                 {
                     System.Console.WriteLine("Format incorrect. Try again: (yyyy-mm-dd)");
-                    return;
-                }
-
-                if (YearPublished.Year > DateTime.Now.Year)
-                {
-                    Console.WriteLine("Year Published cannot be in the future. Try again.");
                     return;
                 }
 
