@@ -1,6 +1,4 @@
-using System;
 using LibrarySystem_DanielR;
-using Microsoft.EntityFrameworkCore.Storage.Json;
 
 public class AddBook // Class => Add book => Create => CRUD
 {
@@ -18,12 +16,15 @@ public class AddBook // Class => Add book => Create => CRUD
                 Console.WriteLine("\nAdd new Book to Library.\n");
                 Console.ResetColor();
 
+                // ask user for Title/Book input
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
                 Console.WriteLine("Enter Title (or press Enter to cancel): ");
                 Console.ResetColor();
                 
+                // variable to read user input => title
                 var _title = Console.ReadLine()?.Trim();
 
+                // error handling - breaks loop => empty/null
                 if (string.IsNullOrEmpty(_title))
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
@@ -31,13 +32,16 @@ public class AddBook // Class => Add book => Create => CRUD
                     Console.ResetColor();
                     break; // Exit the loop
                 }
-
+                
+                // variable Year Published
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
                 Console.WriteLine("\nEnter Year Published (yyyy):");
                 Console.ResetColor();
 
+                // variable to read user input => Year published
                 var _yearPublished = Console.ReadLine()?.Trim();
 
+                // error handling - restart loop => inccorect format
                 if (!int.TryParse(_yearPublished, out int YearPublished))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
@@ -48,10 +52,12 @@ public class AddBook // Class => Add book => Create => CRUD
                     continue; // Retry from the start of the loop
                 }
 
+                // confirm => add => New Book
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine($"\nConfirm adding the book '{_title}' published in {YearPublished} (y/n):");
                 Console.ResetColor();
 
+                // Confirmation or Exit loop => new entry Book
                 var confirmation = Console.ReadLine()?.Trim().ToLower();
 
                 if (confirmation != "y")
@@ -153,6 +159,7 @@ public class AddAuthor
                         LastName = _lastName
                     };
 
+                    
                     context.Authors.Add(_author);
                     context.SaveChanges();
 

@@ -16,6 +16,7 @@ public class AddMember
                 Console.WriteLine("\nAdding New Member:\n");
                 Console.ResetColor();
 
+                // error handling - get user input => new Member
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
                 var _firstName = GetInput("\n1: Enter First Name (or press Enter to cancel):");
 
@@ -92,6 +93,7 @@ public class AddMember
                     Email = _email
                 };
 
+                // adds context to members & save changes
                 Console.Clear();
                 context.Members.Add(_member);
                 context.SaveChanges();

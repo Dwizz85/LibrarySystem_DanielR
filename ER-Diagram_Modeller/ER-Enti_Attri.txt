@@ -1,0 +1,108 @@
+____________________________________________________________________
+====================================================================
+=============   Entiti-Relationship modell (ER-Model)  =============
+====================================================================
+
+
+==============================
+** Entities and Attributes  **
+==============================
+
+    Book:
+    - BookID (PK) (NOT NULL)
+    - Title (VARCHAR) (NOT NULL)
+    - YearPublished (INT)
+    - IsAvailable (BOOLEAN) (DEFAULT FALSE)
+
+    Author:
+    - AuthorID (PK) (NOT NULL)
+    - FirstName (VARCHAR) (NOT NULL)
+    - LastName (VARCHAR) (NOT NULL)
+
+    BookAuthor:
+    - BookAuthorID (PK) (NOT NULL)
+    - BookID (FK) (NOT NULL)
+    - AuthorID (FK) (NOT NULL)
+
+    Loan:
+    - LoanID (PK) (NOT NULL)
+    - BookID (FK) (NOT NULL)
+    - MemberID (FK) (NOT NULL)
+    - LoanDate (DATETIME) (NOT NULL)
+    - ReturnDate (DATETIME) (NOT NULL)
+    - IsReturned (BOOLEAN) (DEFAULT FALSE)
+
+    Member:
+    - MemberID (PK) (NOT NULL)
+    - FirstName (VARCHAR) (NOT NULL)
+    - LastName (VARCHAR) (NOT NULL)
+    - Email (VARCHAR) (NOT NULL)
+
+==========================================
+** Entities & Attributes - Relationship **
+==========================================
+
+--- Book & Author:
+
+     -- Many-to-Many ===  an author can write several of books and a
+                          book can have several of authors.
+
+--- Books & Loans:
+
+      -- One-to-Many ===  Loans can be one or several of books.
+                        
+
+--- Members & Loans:
+
+      -- One-to-One ===   A loan requires a borrower.
+
+================================
+** Approach Define Data Types **
+================================
+
+    You don't have to define column data types like VARCHAR(32) directly in
+    Microsoft SQL Server Management Studio (SSMS). You can handle this entirely through
+    migrations and updating your database using tools like Entity Framework (EF).
+
+
+--- 1. Define Data Types in Your Code (Preferred for Migrations):
+       When using Entity Framework, you can define data types in your entity model and migrations.
+
+        --- Example ---
+
+                public class Book
+                {
+                    public int BookId { get; set; }
+                    public string Title { get; set; }
+                    public string Author { get; set; }
+                    public int YearPublished { get; set; }
+                }
+
+        --- Generate and apply migrations ---
+
+                dotnet ef migrations add AddBookAuthorColumn
+                dotnet ef database update
+
+    2. Manually Define Data Types in SQL Server Management Studio:
+
+    This approach is manual and involves editing the database schema directly in SSMS.
+    If you choose this, you’ll need to ensure the code in your application matches the database schema to avoid conflicts.
+
+=======================================
+** Advantages of Using EF Migrations **
+=======================================
+
+    --- Code-Centric Development:
+        
+        Your database schema is derived directly from your entity models, reducing the risk of discrepancies.
+
+    --- Version Control:
+
+        Migrations are tracked in source control, making it easier to share changes across teams.
+
+    --- Automation:
+
+        Automates the process of updating the database schema, which saves time and minimizes human error.
+        Flexibility:
+
+    You can still customize migrations for special cases by editing the generated SQL in the migration files.

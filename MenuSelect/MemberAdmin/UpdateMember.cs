@@ -44,7 +44,6 @@ public class UpdateMember
 
             else
             {
-
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("\nInvalid input. Please enter a number between 1 and 4.\n");
                 Console.ResetColor();
@@ -52,7 +51,6 @@ public class UpdateMember
                 Console.WriteLine("Press any key to try again...");
                 Console.ResetColor();
                 Console.ReadKey();
-
             }
             
         }
@@ -171,12 +169,13 @@ public class UpdateMember
         }
     }
 
-    private static void UpdateFirstName(Member selectedMember)
+    private static void UpdateFirstName(Member selectedMember) // update member - First name
     {
         Console.ForegroundColor = ConsoleColor.DarkGreen;
         Console.WriteLine("\nEnter new First Name:");
         Console.ResetColor();
 
+        // read user input - error handling
         var newFirstName = Console.ReadLine()?.Trim();
 
             if (string.IsNullOrWhiteSpace(newFirstName))
@@ -194,12 +193,13 @@ public class UpdateMember
             }
     }
 
-    private static void UpdateLastName(Member selectedMember)
+    private static void UpdateLastName(Member selectedMember)   // update member - Last name
     {
         Console.ForegroundColor = ConsoleColor.DarkGreen;
         Console.WriteLine("\nEnter new Last Name:");
         Console.ResetColor();
 
+        // user input - error handling
         var newLastName = Console.ReadLine()?.Trim();
 
             if (string.IsNullOrWhiteSpace(newLastName))
@@ -217,12 +217,13 @@ public class UpdateMember
             }
     }
 
-    private static void UpdateEmail(Member selectedMember)
+    private static void UpdateEmail(Member selectedMember)  // update member - email
     {
         Console.ForegroundColor = ConsoleColor.DarkGreen;
         Console.WriteLine("\nEnter new Email:");
         Console.ResetColor();
 
+        // user input - error handling
         var newEmail = Console.ReadLine()?.Trim();
 
             if (string.IsNullOrWhiteSpace(newEmail) || !newEmail.Contains("@"))

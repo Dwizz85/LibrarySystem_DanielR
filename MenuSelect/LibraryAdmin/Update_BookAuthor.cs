@@ -132,15 +132,18 @@ public class UpdateAuthor // Class for update => Author => CRUD => Update
                 Console.WriteLine("------------------------------------------");
                 Console.ResetColor();
 
+                                    // Check if the author's first name exceeds 20 characters
+                                    // If it does, truncate it to 17 characters and add "..."
+                                    // Otherwise, use the full first name
                 foreach (var author in authors)
                 {
                     var firstName = author.FirstName.Length > 20 ? author.FirstName.Substring(0, 17) + "..." : author.FirstName; // Truncate if too long
                     var lastName = author.LastName.Length > 20 ? author.LastName.Substring(0, 17) + "..." : author.LastName; // Truncate if too long
 
                     Console.WriteLine($"{author.AuthorId,-6} {firstName,-20} {lastName}");
-}
+                }
 
-
+                // error handling - input or cancel
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
                 Console.Write("\nEnter the ID of the author you want to update (or press Enter to cancel): ");
                 Console.ResetColor();
@@ -156,6 +159,7 @@ public class UpdateAuthor // Class for update => Author => CRUD => Update
                         return;
                     }
 
+                    // error handling - author id => try again
                     if (!int.TryParse(input, out var authorId))
                     {
                         Console.ForegroundColor = ConsoleColor.Red;

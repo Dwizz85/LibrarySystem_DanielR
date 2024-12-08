@@ -88,30 +88,6 @@ public class Seed
                         IsAvailable = true
                     };
 
-                    var book10 = new Book
-                    {
-                        Title = "Coders Guide",
-                        YearPublished = 1615,
-                        IsAvailable = true
-                    };
-
-                    var book11 = new Book
-                    {
-                        Title = "Multiple Relations",
-                        YearPublished = 2024,
-                        IsAvailable = true
-                    };
-
-                    var book12 = new Book
-                    {
-                        Title = "PK & FK Intro",
-                        YearPublished = 2010,
-                        IsAvailable = true
-                    };
-
-
-
-
                     #endregion
 
                     #region Authors Information
@@ -181,9 +157,6 @@ public class Seed
                     context.Books.Add(book7);
                     context.Books.Add(book8);
                     context.Books.Add(book9);
-                    context.Books.Add(book10);
-                    context.Books.Add(book11);
-                    context.Books.Add(book12);
 
                     context.Authors.Add(author1);
                     context.Authors.Add(author2);
@@ -200,6 +173,7 @@ public class Seed
                     {
                         // Save the added books and authors to the database
                         context.SaveChanges();
+                        
                     }
                     catch (DbUpdateException ex)
                     {
@@ -220,11 +194,9 @@ public class Seed
                             new BookAuthor {Book = book7, Author = author7},
                             new BookAuthor {Book = book8, Author = author8},
                             new BookAuthor {Book = book9, Author = author9},
-                            new BookAuthor {Book = book10, Author = author7},
-                            new BookAuthor {Book = book11, Author = author8},
-                            new BookAuthor {Book = book12, Author = author5},
+                        
                         };
-
+ 
                     // Ensure relationships are unique before adding
                     foreach (var ba in bookAuthors)
                     {
@@ -234,7 +206,6 @@ public class Seed
                             context.BookAuthors.Add(ba);
                         }
                     }
-
 
                     // Relationships in this context will be added.
                     context.BookAuthors.AddRange(bookAuthors);
@@ -255,7 +226,7 @@ public class Seed
 
                     // Commit the transaction to finalize all changes 
                     transaction.Commit();
-                    System.Console.WriteLine("Saved changes");
+                    Console.WriteLine("Saved changes");
                 }
                 else
                 {
@@ -270,8 +241,8 @@ public class Seed
             {
                 // Rollback the transaction in case of an error
                 transaction.Rollback();
-                System.Console.WriteLine("Pardon our dust! An error occurred: " + ex.Message);
-                System.Console.WriteLine("Transaction was rolled back!" + ex.Message);
+                Console.WriteLine("Pardon our dust! An error occurred: " + ex.Message);
+                Console.WriteLine("Transaction was rolled back!" + ex.Message);
             }
         }
     }

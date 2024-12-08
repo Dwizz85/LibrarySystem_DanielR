@@ -1,6 +1,3 @@
-using System;
-using LibrarySystem_DanielR;
-using System.Linq;
 
 namespace LibrarySystem_DanielR
 {

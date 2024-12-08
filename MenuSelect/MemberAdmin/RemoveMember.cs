@@ -34,6 +34,7 @@ public class RemoveMember
             Console.Write("Enter your choice: ");
             Console.ResetColor();
 
+            // error handling - menu selection
             if (int.TryParse(Console.ReadLine(), out int menuSel) && menuSel >= 1 && menuSel <= 2)
             {
                 isRunning = HandleInput(menuSel);
@@ -53,7 +54,7 @@ public class RemoveMember
 
     private static bool HandleInput(int menuSel)
     {
-        switch (menuSel)
+        switch (menuSel)        // switch menusel for selecting menu
         {
             case 1:
                 RemoveMemberDetails();
@@ -81,12 +82,12 @@ public class RemoveMember
     {
         using (var context = new AppDbContext())
         {
-            try
+            try //error handling
             {
                 // Fetch all members from the database
                 var members = context.Members.ToList();
 
-                    if (!members.Any())
+                    if (!members.Any()) // error handling - availabiity
                     {
                         Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine("\nNo members found in the database.");

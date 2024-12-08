@@ -1,4 +1,3 @@
-using System;
 using LibrarySystem_DanielR;
 
 public class AddRelations   // Class to set relation => Book => Author
@@ -46,6 +45,7 @@ public class AddRelations   // Class to set relation => Book => Author
 
                 var bookInput = Console.ReadLine()?.Trim();
                 
+                // error handling => cancel action
                 if (string.IsNullOrEmpty(bookInput))
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
@@ -55,6 +55,7 @@ public class AddRelations   // Class to set relation => Book => Author
                     return;
                 }
 
+                // error handling => controlls valid Book ID
                 if (!int.TryParse(bookInput, out var bookID) || !books.Any(b => b.BookId == bookID))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
@@ -67,6 +68,7 @@ public class AddRelations   // Class to set relation => Book => Author
                 // Display all authors with a formatted table
                 Console.Clear();
 
+                // context => Authors => List
                 var authors = context.Authors.ToList();
 
                 if (!authors.Any())
@@ -77,6 +79,7 @@ public class AddRelations   // Class to set relation => Book => Author
                     return;
                 }
 
+                // format tor table => output => authors
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("ID         Name");
                 Console.WriteLine("--------------------------------");
@@ -87,12 +90,14 @@ public class AddRelations   // Class to set relation => Book => Author
                     Console.WriteLine($"{author.AuthorId,-10} {author.FirstName,-15} {author.LastName}");
                 }
 
+                //  promt user input => author id or cancel action
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
                 Console.Write("\nEnter the Author ID to add a relation (or press Enter to cancel): ");
                 Console.ResetColor();
 
                 var authorInput = Console.ReadLine()?.Trim();
                 
+                // error handling - cancel action
                 if (string.IsNullOrEmpty(authorInput))
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
@@ -102,6 +107,7 @@ public class AddRelations   // Class to set relation => Book => Author
                     return;
                 }
 
+                // error handling - controlls valid author ID
                 if (!int.TryParse(authorInput, out var authorID) || !authors.Any(a => a.AuthorId == authorID))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
@@ -116,6 +122,7 @@ public class AddRelations   // Class to set relation => Book => Author
 
                 try
                 {
+                    // 
                     context.BookAuthors.Add(bookAuthor);
                     context.SaveChanges();
 

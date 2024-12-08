@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using LibrarySystem_DanielR;
 
-
 public class AppDbContext : DbContext
 {
     public DbSet<Author> Authors {get; set;}                // create collection for Authors in library and allows CRUD

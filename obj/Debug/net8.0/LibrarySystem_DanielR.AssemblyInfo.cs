@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LibrarySystem_DanielR")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0ad17e5b7304422b0cc48cc37a306502ff771155")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ec1d8476de6e161801dc4bd8c4f9d20dcb5ec3fa")]
 [assembly: System.Reflection.AssemblyProductAttribute("LibrarySystem_DanielR")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LibrarySystem_DanielR")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

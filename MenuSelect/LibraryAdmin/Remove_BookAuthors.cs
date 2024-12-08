@@ -13,9 +13,9 @@ public class RemoveBook // Class to delete => targeted data => Library => CRUD =
             {
                 Console.Clear(); // Clear the console for readability
 
-                var _books = context.Books.ToList();
+                var _books = context.Books.ToList();    // context books => list
 
-                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.ForegroundColor = ConsoleColor.Blue;         
                 Console.WriteLine("\nRemove Book from Library:\n");
                 Console.ResetColor();
 
@@ -66,6 +66,7 @@ public class RemoveBook // Class to delete => targeted data => Library => CRUD =
                     continue; // Retry the loop
                 }
 
+                // context books => list
                 var removeBook = context.Books.FirstOrDefault(b => b.BookId == bookID);
 
                 if (removeBook == null)
@@ -153,8 +154,10 @@ public class RemoveAuthor
                 {
                     var fullName = $"{item.FirstName} {item.LastName}";
                     fullName = fullName.Length > 30 ? fullName.Substring(0, 27) + "..." : fullName;
+                    Console.WriteLine($"{item.AuthorId,-6} {fullName}"); // This line outputs each author's details
                 }
 
+                // error handling - cancel and input => remove author
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
                 Console.Write("\nEnter the ID of the author you want to remove (or press Enter to cancel): ");
                 Console.ResetColor();
@@ -181,6 +184,7 @@ public class RemoveAuthor
                     continue; // Retry the loop
                 }
 
+                // context and LINQ for authors ID
                 var removeAuthor = context.Authors.FirstOrDefault(a => a.AuthorId == authorID);
 
                 if (removeAuthor == null)
@@ -200,12 +204,14 @@ public class RemoveAuthor
                     .Where(ba => ba.AuthorID == authorID)
                     .ToList();
 
+                // error handling - input author id
                 if (matchedBookAuthor.Any())
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("\nWarning - This author is linked to one or more books and the connections will also be removed.");
                     Console.ResetColor();
 
+                    // context for book author relations => remove
                     context.BookAuthors.RemoveRange(matchedBookAuthor);
 
                     Console.ForegroundColor = ConsoleColor.Yellow;

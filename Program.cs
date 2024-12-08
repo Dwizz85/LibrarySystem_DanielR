@@ -18,18 +18,17 @@ namespace LibrarySystem_DanielR
                 return; // Exit the program if seeding fails
             }
 
-            
             // // Instantiate IntroPage and Run
-            // var introPage = new IntroPage();
-            // introPage.ShowIntro();
+            var introPage = new IntroPage();
+            introPage.ShowIntro();
 
             // Instantiate MainMenuIndex & Run the Main Menu
-            var mainMenuIndex = new MainMenuIndex(); // Create an instance
-            mainMenuIndex.MainMenu(); // Call the instance method
+            var mainMenuIndex = new MainMenuIndex();
+            mainMenuIndex.MainMenu();
 
             // // Instantiate OutroPage and Run
-            // var outroPage = new OutroPage();
-            // outroPage.ShowOutro();
+            var outroPage = new OutroPage();
+            outroPage.ShowOutro();
         }
     }
 }
