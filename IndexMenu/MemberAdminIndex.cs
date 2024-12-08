@@ -24,9 +24,10 @@ namespace LibrarySystem_DanielR
                 Console.ResetColor();
                 Console.WriteLine();
                 Console.WriteLine("  1. Register Member");
-                Console.WriteLine("  2. Update Member\n");
+                Console.WriteLine("  2. Update Member");
+                Console.WriteLine("  3. Remove Member\n");
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
-                Console.WriteLine("  3. Return to Main Menu");
+                Console.WriteLine("  4. Return to Main Menu");
                 Console.ResetColor();
                 Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.DarkCyan;
@@ -36,13 +37,15 @@ namespace LibrarySystem_DanielR
                 Console.Write("Enter your choice: ");
                 Console.ResetColor();
 
-                if (int.TryParse(Console.ReadLine(), out int menuSel) && menuSel >= 1 && menuSel <= 3)
+                if (int.TryParse(Console.ReadLine(), out int menuSel) && menuSel >= 1 && menuSel <= 4)
                 {
                     isRunning = HandleInput(menuSel);
                 }
                 else
                 {
-                    Console.WriteLine("Invalid input. Please enter a number between 1 and 3.");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Invalid input. Please enter a number between 1 and 4.");
+                    Console.ResetColor();
                     Console.ForegroundColor = ConsoleColor.DarkGreen;
                     Console.WriteLine("\nPress any key to try again.");
                     Console.ResetColor();
@@ -59,17 +62,22 @@ namespace LibrarySystem_DanielR
                     AddMember.Run();
                     break;
                 case 2:
-                    Console.WriteLine("Update Member functionality coming soon!");
+                    UpdateMember.Run();
                     break;
                 case 3:
+                    RemoveMember.Run();
+                    break;
+                case 4:
+                    Console.ForegroundColor = ConsoleColor.Blue;
                     Console.WriteLine("\nReturning to Main Menu...");
+                    Console.ResetColor();
                     return false; // Exit the MemberAdmin loop
                 default:
                     Console.WriteLine("Invalid choice! Please try again.");
                     break;
             }
             Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.WriteLine("\nPress any key to continue...");
+            Console.WriteLine("\nPress any key to continue...\n");
             Console.ResetColor();
             Console.ReadKey();
             return true; // Keep the loop running

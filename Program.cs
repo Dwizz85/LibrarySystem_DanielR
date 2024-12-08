@@ -1,35 +1,36 @@
 ﻿using System;
 using LibrarySystem_DanielR;
 
-
 namespace LibrarySystem_DanielR
 {
     public class Program
     {
         public static void Main(string[] args)
         {
-            // Run seeding function to populate data
-            try
+            
+            try     // Run seeding function to populate data
             {
                 Seed.Run();
             }
             catch (Exception ex)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"Error during seeding: {ex.Message}");
-                Console.ResetColor();
                 return; // Exit the program if seeding fails
             }
 
             // Instantiate MainMenuIndex
             var mainMenu = new MainMenuIndex();
             
-            // Instantiate IntroPage
-            var introPage = new IntroPage();
-            introPage.ShowIntro();
+            // // Instantiate IntroPage and Run
+            // var introPage = new IntroPage();
+            // introPage.ShowIntro();
 
             // Run the Main Menu
             mainMenu.MainMenu();
+
+            // // Instantiate OutroPage and Run
+            // var outroPage = new OutroPage();
+            // outroPage.ShowOutro();
         }
     }
 }

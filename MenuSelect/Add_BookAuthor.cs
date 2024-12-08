@@ -8,47 +8,64 @@ public class AddBook        // class => add book => Create => CRUD
     {
         using (var context = new AppDbContext())
         {
-            System.Console.WriteLine("\nAdd new Book to Library.\n");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("\nAdd new Book to Library.\n");
+                Console.ResetColor();
 
-            System.Console.WriteLine("Enter Title: ");
-            var _title = Console.ReadLine()?.Trim();
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.WriteLine("Enter Title: ");
+                Console.ResetColor();
+                var _title = Console.ReadLine()?.Trim();
 
                 if (string.IsNullOrEmpty(_title))
                 {
-                    System.Console.WriteLine("You must enter a Title for the Book!");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\nYou must enter a Title for the Book!");
+                    Console.ResetColor();
                     return;
                 }
             
-            System.Console.WriteLine("Enter Year Published (yyyy): ");
-            var _yearPublished = Console.ReadLine()?.Trim();
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.WriteLine("\nEnter Year Published (yyyy):");
+                Console.ResetColor();
+                var _yearPublished = Console.ReadLine()?.Trim();
 
                 if (!int.TryParse(_yearPublished, out int YearPublished))
                 {
-                    System.Console.WriteLine("Format incorrect. Try again: (yyyy-mm-dd)");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\nFormat incorrect. Try again: (yyyy)");
+                    Console.ResetColor();
                     return;
                 }
 
-            Console.WriteLine($"Confirm adding the book '{_title}' published in {YearPublished} (y/n):");
-            var confirmation = Console.ReadLine()?.Trim().ToLower();
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine($"\nConfirm adding the book '{_title}' published in {YearPublished} (y/n):");
+                var confirmation = Console.ReadLine()?.Trim().ToLower();
 
                 if (confirmation != "y")
                 {
-                    Console.WriteLine("Action canceled.");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\nAction canceled.");
+                    Console.ResetColor();
                     return;
                 }
 
-            System.Console.WriteLine("The Book is added and ready to members!");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("\nThe Book is added and ready to members!");
+                Console.ResetColor();
 
-            var _book = new Book
-            {
-                Title = _title,
-                YearPublished = YearPublished,
-                IsAvailable = true
-            };
+                var _book = new Book
+                {
+                    Title = _title,
+                    YearPublished = YearPublished,
+                    IsAvailable = true
+                };
 
-            context.Books.Add(_book);
-            context.SaveChanges();
-            System.Console.WriteLine($"The Book: {_title} have been added to the library!");
+                context.Books.Add(_book);
+                context.SaveChanges();
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine($"\nThe Book: {_title} have been added to the library!");
+                Console.ResetColor();
         }
     }
 }
@@ -58,28 +75,38 @@ public class AddAuthor
     {
         using (var context = new AppDbContext())
         {
+            Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("\nAdd new Author to library:\n");
+            Console.ResetColor();
 
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
             var _firstName = GetInput("Enter First Name:");
             var _lastName = GetInput("Enter Last Name:");
+            Console.ResetColor();
 
             if (string.IsNullOrWhiteSpace(_firstName) || string.IsNullOrWhiteSpace(_lastName))
             {
-                Console.WriteLine("First Name and Last Name cannot be empty. Try again.");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nFirst Name and Last Name cannot be empty. Try again.");
+                Console.ResetColor();
                 return;
             }
 
             if (context.Authors.Any(a => a.FirstName == _firstName && a.LastName == _lastName))
             {
-                Console.WriteLine("This author already exists in the library.");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nThis author already exists in the library.");
+                Console.ResetColor();
                 return;
             }
-
-            Console.WriteLine($"Confirm adding the author '{_firstName} {_lastName}' (y/n):");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine($"\nConfirm adding the author '{_firstName} {_lastName}' (y/n):");
+            Console.ResetColor();
             var confirmation = Console.ReadLine()?.Trim().ToLower();
             if (confirmation != "y")
-            {
-                Console.WriteLine("Action canceled.");
+            {   Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nAction canceled.");
+                Console.ResetColor();
                 return;
             }
 
@@ -91,11 +118,15 @@ public class AddAuthor
 
             context.Authors.Add(_author);
             context.SaveChanges();
-            Console.WriteLine($"The Author '{_firstName} {_lastName}' has been added to the library!");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine($"\nThe Author '{_firstName} {_lastName}' has been added to the library!");
+            Console.ResetColor();
 
             string GetInput(string message)
             {
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine(message);
+                Console.ResetColor();
                 return Console.ReadLine()?.Trim();
             }
         }

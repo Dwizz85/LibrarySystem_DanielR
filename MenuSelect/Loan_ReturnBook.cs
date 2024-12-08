@@ -9,7 +9,9 @@ public class LoanBook   // class to loan => book => relate => member
     {
         using (var context = new AppDbContext())
         {
-            System.Console.WriteLine("Books available for Loan:");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            System.Console.WriteLine("\nBooks available for Loan:\n");
+            Console.ResetColor();
             var Books = context.Books
                 .Include(ba => ba.BookAuthors)
                 .ThenInclude(a => a.Author)
@@ -17,7 +19,9 @@ public class LoanBook   // class to loan => book => relate => member
         
             if (!Books.Any())
             {
-                System.Console.WriteLine("No books available for loan at this moment!");
+                Console.ForegroundColor = ConsoleColor.Red;
+                System.Console.WriteLine("\nNo books available for loan at this moment!\n");
+                Console.ResetColor();
                 return;
             }
 
@@ -27,11 +31,15 @@ public class LoanBook   // class to loan => book => relate => member
                 Console.WriteLine($"Book ID: {_book.BookId,-10} Title: {_book.Title,-40} Authors: {authors}");   
             }
 
-            Console.Write("\nEnter the Book ID to loan: ");
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.Write("\nEnter the Book ID to loan:\n");
+            Console.ResetColor();
 
             if (!int.TryParse(Console.ReadLine(), out int bookId))
             {
-                Console.WriteLine("Invalid input. Please enter a valid numeric Book ID.");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nInvalid input. Please enter a valid numeric Book ID.\n");
+                Console.ResetColor();
                 return;
             }
 
@@ -39,15 +47,20 @@ public class LoanBook   // class to loan => book => relate => member
 
             if (selectedBook == null)
             {
-                Console.WriteLine("Book ID not found or the book is not available.");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nBook ID not found or the book is not available.\n");
+                Console.ResetColor();
                 return;
             }
-
-            Console.Write("Enter Member ID to associate with the loan: ");
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.Write("\nEnter Member ID to associate with the loan:\n");
+            Console.ResetColor();
 
             if (!int.TryParse(Console.ReadLine(), out int memberId))
             {
-                Console.WriteLine("Invalid input. Please enter a valid numeric Member ID.");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nInvalid input. Please enter a valid numeric Member ID.\n");
+                Console.ResetColor();
                 return;
             }
 
@@ -55,18 +68,24 @@ public class LoanBook   // class to loan => book => relate => member
 
             if (member == null)
             {
-                Console.WriteLine("Member ID not found.");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nMember ID not found.\n");
+                Console.ResetColor();
                 return;
             }
 
             // Confirm loan creation
-            Console.WriteLine($"\nConfirm loaning '{selectedBook.Title}' to {member.FirstName} {member.LastName}? (y/n):");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine($"\nConfirm loaning '{selectedBook.Title}' to {member.FirstName} {member.LastName}? (y/n):\n");
+            Console.ResetColor();
 
             var confirmation = Console.ReadLine()?.Trim().ToLower();
 
             if (confirmation != "y")
             {
-                Console.WriteLine("Loan canceled.");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nLoan canceled.\n");
+                Console.ResetColor();
                 return;
             }
 
@@ -85,7 +104,9 @@ public class LoanBook   // class to loan => book => relate => member
             selectedBook.IsAvailable = false;
 
             context.SaveChanges();
-            Console.WriteLine($"\nBook '{selectedBook.Title}' has been loaned to {member.FirstName} {member.LastName}!");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine($"\nBook '{selectedBook.Title}' has been loaned to {member.FirstName} {member.LastName}!\n");
+            Console.ResetColor();
         }
     }
 }
@@ -95,8 +116,10 @@ public class ReturnBook
     public static void Run()
     {
         using (var context = new AppDbContext())
-        {
-                Console.WriteLine("Books currently loaned out:\n");
+        {       
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("\nBooks currently loaned out:\n");
+                Console.ResetColor();
 
                 var loanedBooks = context.Loans
                     .Include(l => l.Book)
@@ -113,7 +136,9 @@ public class ReturnBook
 
                 if (!loanedBooks.Any())
                 {
-                    Console.WriteLine("No books are currently loaned out.");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\nNo books are currently loaned out.\n");
+                    Console.ResetColor();
                     return;
                 }
 
@@ -122,11 +147,15 @@ public class ReturnBook
                     Console.WriteLine($"Loan ID: {loan.LoanID,-10} Book: {loan.Title,-30} Member: {loan.MemberName,-20} Loan Date: {loan.LoanDate:yyyy-MM-dd}");
                 }
 
-                Console.Write("\nEnter the Loan ID to return the book: ");
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.Write("\nEnter the Loan ID to return the book:\n");
+                Console.ResetColor();
 
                 if (!int.TryParse(Console.ReadLine(), out int loanId))
                 {
-                    Console.WriteLine("Invalid input. Please enter a valid numeric Loan ID.");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\nInvalid input. Please enter a valid numeric Loan ID.\n");
+                    Console.ResetColor();
                     return;
                 }
 
@@ -134,18 +163,24 @@ public class ReturnBook
                 
                 if (loanToReturn == null)
                 {
-                    Console.WriteLine("Loan ID not found or the book has already been returned.");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\nLoan ID not found or the book has already been returned.\n");
+                    Console.ResetColor();
                     return;
                 }
 
                 // Confirm return
-                Console.WriteLine($"\nConfirm returning the book '{loanToReturn.Book.Title}'? (y/n):");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine($"\nConfirm returning the book '{loanToReturn.Book.Title}'? (y/n):\n");
+                Console.ResetColor();
 
                 var confirmation = Console.ReadLine()?.Trim().ToLower();
 
                 if (confirmation != "y")
                 {
-                    Console.WriteLine("Return canceled.");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\nReturn canceled.\n");
+                    Console.ResetColor();
                     return;
                 }
 
@@ -157,7 +192,9 @@ public class ReturnBook
                 loanToReturn.Book.IsAvailable = true;
 
                 context.SaveChanges();
-                Console.WriteLine($"\nBook '{loanToReturn.Book.Title}' has been returned successfully!");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine($"\nBook '{loanToReturn.Book.Title}' has been returned successfully!\n");
+                Console.ResetColor();
         }
     }
 }

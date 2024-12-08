@@ -16,7 +16,9 @@ public class RemoveBook      // class to delete => targeted data => Library => C
                 System.Console.WriteLine($"Title: {item.Title}, Published: {item.YearPublished} ID: {item.BookId}");
             }
             
-            System.Console.WriteLine("Enter ID for the book you want to remove!");
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            System.Console.WriteLine("\nEnter ID for the book you want to remove!");
+            Console.ResetColor();
 
             var _input = Console.ReadLine();
 
@@ -39,19 +41,19 @@ public class RemoveBook      // class to delete => targeted data => Library => C
 
             if (matchedBookAuthor.Any())
             {
-                System.Console.WriteLine("Warning - Book has connection to multiple Authors and will be removed!");
+                Console.WriteLine("Warning - Book has connection to multiple Authors and will be removed!");
 
                 context.BookAuthors.RemoveRange(matchedBookAuthor);
 
-                System.Console.WriteLine("Hit any key to continue!");
+                Console.WriteLine("Press any key to continue...");
                 Console.ReadLine();
             }
 
             context.Books.Remove(removeBook);
             context.SaveChanges();
 
-            System.Console.WriteLine($"You have now erased following Book: {removeBook.Title}.");
-            System.Console.WriteLine("Hit any key to continue!");
+            Console.WriteLine($"You have now erased following Book: {removeBook.Title}.");
+            Console.WriteLine("Press any key to continue...");
             Console.ReadLine();
         }
     }
@@ -67,16 +69,17 @@ public class RemoveAuthor
 
             foreach (var item in _author)
             {
-                System.Console.WriteLine($"Author ID: {item.AuthorId}, Name: {item.FirstName} {item.LastName}.");
+                Console.WriteLine($"Author ID: {item.AuthorId}, Name: {item.FirstName} {item.LastName}.");
             }
-
-            System.Console.WriteLine("Enter ID for the Author you want to remove:");
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine("\nEnter ID for the Author you want to remove:");
+            Console.ResetColor();
 
             var _input = Console.ReadLine()?.Trim();
 
             if (!int.TryParse(_input, out var authorID))
             {
-                System.Console.WriteLine("ID not found, please try again!");
+                Console.WriteLine("ID not found, please try again!");
                 return;
             }
 
@@ -84,7 +87,7 @@ public class RemoveAuthor
             
             if (removeAuthor == null)
             {
-                System.Console.WriteLine("ID not found, please try again!");
+                Console.WriteLine("ID not found, please try again!");
                 return;
             }
 
@@ -94,18 +97,26 @@ public class RemoveAuthor
 
             if (matchedBookAuthor.Any())
             {
-                System.Console.WriteLine("Warning - Author has connection to multiple books and will also be removed!");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("Warning - Author has connection to multiple books and will also be removed!");
+                Console.ResetColor();
 
                 context.BookAuthors.RemoveRange(matchedBookAuthor);
-                System.Console.WriteLine("Hit any key to continue!");
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.WriteLine("\nPress any key to continue...");
+                Console.ResetColor();
                 Console.ReadLine();
             }
 
             context.Authors.Remove(removeAuthor);
             context.SaveChanges();
 
-            System.Console.WriteLine($"You have now erased following Author: {removeAuthor.FirstName} {removeAuthor.LastName}.");
-            System.Console.WriteLine("Hit any key to continue!");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine($"\nYou have now erased following Author: {removeAuthor.FirstName} {removeAuthor.LastName}.");
+            Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine("\nPress any key to continue...");
+            Console.ResetColor();
             
         }
     }

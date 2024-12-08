@@ -60,14 +60,16 @@ namespace LibrarySystem_DanielR
                     RemoveBook.Run();
                     break;
                 case 3:
-                    Console.WriteLine("Returning to Main Menu...");
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.WriteLine("\nReturning to Main Menu...");
+                    Console.ResetColor();
                     return false; // Exit the RemoveMenu loop
                 default:
                     Console.WriteLine("Invalid choice, please try again!");
                     break;
             }
             Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.WriteLine("Press any key to continue...");
+            Console.WriteLine("\nPress any key to continue...\n");
             Console.ResetColor();
             Console.ReadKey();
             return true; // Keep the loop running

@@ -15,66 +15,89 @@ public class AddMember
 
             while (isRunning)
             {
-                Console.WriteLine("Adding New Member:");
-                Console.WriteLine("__________________\n");
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.WriteLine("\nAdding New Member:");
+                    Console.ResetColor();
 
-                var _firstName = GetInput("1: Enter First Name:");
-                var _lastName = GetInput("2: Enter Last Name:");
+                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+                    var _firstName = GetInput("\n1: Enter First Name:");
+                    var _lastName = GetInput("\n2: Enter Last Name:");
+                    Console.ResetColor();
 
-                if (string.IsNullOrWhiteSpace(_firstName) || string.IsNullOrWhiteSpace(_lastName))
-                {
-                    Console.WriteLine("First and Last name must be entered!");
-                    continue;
+                    if (string.IsNullOrWhiteSpace(_firstName) || string.IsNullOrWhiteSpace(_lastName))
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\nFirst and Last name must be entered!\n");
+                        Console.ResetColor();
+                        continue;
+                    }
+
+                    // Check if member already exists
+                    var _existingMember = context.Members
+                        .FirstOrDefault(m => m.FirstName == _firstName && m.LastName == _lastName);
+
+                    if (_existingMember != null)
+                    {
+                        Console.Clear();
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine($"\nMember '{_firstName} {_lastName}' already exists in the database.");
+                        Console.ResetColor();
+                        Console.ForegroundColor = ConsoleColor.DarkGreen;
+                        Console.WriteLine("\nReturning to menu.\n");
+                        Console.ResetColor();
+                        return; // Exit if the member already exists
+                    }
+
+                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+                    var _email = GetInput("\n3: Enter Email:");
+                    Console.ResetColor();
+
+                    if (string.IsNullOrWhiteSpace(_email))
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\nPlease enter an Email address!");
+                        Console.ResetColor();
+                        continue;
+                    }
+
+                    // Confirm details before saving
+                    Console.WriteLine($"\nConfirm adding the member:\nFirst Name: {_firstName}\nLast Name: {_lastName}\nEmail: {_email}\n(y/n):");
+                    var confirmation = Console.ReadLine()?.Trim().ToLower();
+                    if (confirmation != "y")
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\nAction canceled.\n");
+                        Console.ResetColor();
+                        continue;
+                    }
+
+                    // Create and save the new member
+                    var _member = new Member
+                    {
+                        FirstName = _firstName,
+                        LastName = _lastName,
+                        Email = _email
+                    };
+
+                    Console.Clear();
+                    context.Members.Add(_member);
+                    context.SaveChanges();
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.WriteLine($"\nMember '{_firstName} {_lastName}' with Email '{_email}' has been registered!\n");
+                    Console.ResetColor();
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("And so it begins... The time of book loaning is here!\n");
+                    Console.ResetColor();
+
+                    isRunning = false; // Exit the loop
                 }
-
-                // Check if member already exists
-                var _existingMember = context.Members
-                    .FirstOrDefault(m => m.FirstName == _firstName && m.LastName == _lastName);
-
-                if (_existingMember != null)
-                {
-                    Console.WriteLine($"Member '{_firstName} {_lastName}' already exists in the database.");
-                    Console.WriteLine("Returning to menu.");
-                    return; // Exit if the member already exists
-                }
-
-                var _email = GetInput("3: Enter Email:");
-
-                if (string.IsNullOrWhiteSpace(_email))
-                {
-                    Console.WriteLine("Please enter an Email address!");
-                    continue;
-                }
-
-                // Confirm details before saving
-                Console.WriteLine($"Confirm adding the member:\nFirst Name: {_firstName}\nLast Name: {_lastName}\nEmail: {_email}\n(y/n):");
-                var confirmation = Console.ReadLine()?.Trim().ToLower();
-                if (confirmation != "y")
-                {
-                    Console.WriteLine("Action canceled.");
-                    continue;
-                }
-
-                // Create and save the new member
-                var _member = new Member
-                {
-                    FirstName = _firstName,
-                    LastName = _lastName,
-                    Email = _email
-                };
-
-                context.Members.Add(_member);
-                context.SaveChanges();
-                Console.WriteLine($"Member '{_firstName} {_lastName}' with Email '{_email}' has been registered!");
-                Console.WriteLine("And so it begins... The time of book loaning is here!");
-
-                isRunning = false; // Exit the loop
-            }
-                string GetInput(string message)
-                {
-                    Console.WriteLine(message);
-                    return Console.ReadLine()?.Trim();
-                }
+                    string GetInput(string message)
+                    {
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(message);
+                        Console.ResetColor();
+                        return Console.ReadLine()?.Trim();
+                    }
         }
     }
 }

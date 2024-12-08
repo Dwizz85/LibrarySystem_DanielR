@@ -80,7 +80,9 @@ namespace LibrarySystem_DanielR
                     RemoveBook.Run();       // Call method to remove a book
                     break;
                 case 8:
+                    Console.ForegroundColor = ConsoleColor.Blue;
                     Console.WriteLine("\nReturning to Main Menu...");
+                    Console.ResetColor();
                     return false;           
                 default:
                     Console.WriteLine("Invalid choice, please try again!");

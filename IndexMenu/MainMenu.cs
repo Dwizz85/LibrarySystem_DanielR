@@ -63,7 +63,7 @@ namespace LibrarySystem_DanielR
                             break;
                         case 6:
                             Console.ForegroundColor = ConsoleColor.DarkGreen;
-                            Console.WriteLine("\nExiting Program...");
+                            Console.WriteLine("\nExiting Program...\n");
                             Console.ResetColor();
                             isRunning = false; // Exit the main menu loop
                             break;
