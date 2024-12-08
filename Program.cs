@@ -19,14 +19,15 @@ namespace LibrarySystem_DanielR
             }
 
             // Instantiate MainMenuIndex
-            var mainMenu = new MainMenuIndex();
+            
             
             // // Instantiate IntroPage and Run
             // var introPage = new IntroPage();
             // introPage.ShowIntro();
 
             // Run the Main Menu
-            mainMenu.MainMenu();
+            var mainMenuIndex = new MainMenuIndex(); // Create an instance
+            mainMenuIndex.MainMenu(); // Call the instance method
 
             // // Instantiate OutroPage and Run
             // var outroPage = new OutroPage();

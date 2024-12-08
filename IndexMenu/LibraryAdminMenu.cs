@@ -6,7 +6,7 @@ namespace LibrarySystem_DanielR
 {
     public class LibraryAdmin
     {
-        public void LibraryAdminMenu()
+        public static void Run()
         {
             bool isRunning = true;
 
@@ -25,12 +25,12 @@ namespace LibrarySystem_DanielR
                 Console.WriteLine();
                 Console.WriteLine("  1. Register new Book");
                 Console.WriteLine("  2. Register new Author");
-                Console.WriteLine("  3. Add relations to Author => Book");
+                Console.WriteLine("  3. Add relations between Author & Book");
                 Console.WriteLine("  4. Update Book info");
                 Console.WriteLine("  5. Update Author");
                 Console.WriteLine("  6. Remove Author");
                 Console.WriteLine("  7. Remove Book\n");
-                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine("  8. Return to Main Menu");
                 Console.ResetColor();
                 Console.WriteLine();
@@ -47,14 +47,18 @@ namespace LibrarySystem_DanielR
                 }
                 else
                 {
-                    Console.WriteLine("Invalid input. Please enter a number between 1 and 8.");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\nInvalid input. Please enter a number between 1 and 8.");
+                    Console.ResetColor();
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("Press any key to try again...");
+                    Console.ResetColor();
                     Console.ReadKey();
                 }
             }
         }
 
-        public bool HandleInput(int menuSel)
+        public static bool HandleInput(int menuSel)
         {
             switch (menuSel)
             {
@@ -80,19 +84,21 @@ namespace LibrarySystem_DanielR
                     RemoveBook.Run();       // Call method to remove a book
                     break;
                 case 8:
-                    Console.ForegroundColor = ConsoleColor.Blue;
-                    Console.WriteLine("\nReturning to Main Menu...");
-                    Console.ResetColor();
+                    // Console.ForegroundColor = ConsoleColor.Blue;
+                    // Console.WriteLine("\nReturning to Main Menu...");
+                    // Console.ResetColor();
                     return false;           
                 default:
+                Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Invalid choice, please try again!");
+                    Console.ResetColor();
                     break;
             }
 
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.WriteLine("\nPress any key to continue...");
-            Console.ResetColor();
-            Console.ReadKey();
+            // Console.ForegroundColor = ConsoleColor.Yellow;
+            // Console.WriteLine("\nPress any key to continue...");
+            // Console.ResetColor();
+            // Console.ReadKey();
             return true;              // Keep the loop running
         }
     }

@@ -5,16 +5,20 @@ using Microsoft.EntityFrameworkCore;
 
 // This Seed class is responsible for adding initial data to the database 
 // (to ensure the program has data to work with when running)
+
 public class Seed
 {
     public static void Run()
     {
+
         using (var context = new AppDbContext())
         {
+
             var transaction = context.Database.BeginTransaction();  // Start a database transaction
 
             try
             {
+
                 // Check if any data already exists in Books, Authors, or BookAuthors tables
                 if (!context.Books.Any() && !context.Authors.Any() && !context.BookAuthors.Any())
                 {

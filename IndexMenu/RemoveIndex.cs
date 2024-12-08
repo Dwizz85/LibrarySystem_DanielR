@@ -16,7 +16,7 @@ namespace LibrarySystem_DanielR
                 Console.ForegroundColor = ConsoleColor.DarkCyan;
                 Console.WriteLine("========================================");
                 Console.ResetColor();
-                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine("      Remove from Library: Author/Book");
                 Console.ResetColor();
                 Console.ForegroundColor = ConsoleColor.DarkCyan;
@@ -25,14 +25,16 @@ namespace LibrarySystem_DanielR
                 Console.WriteLine();
                 Console.WriteLine("  1. Remove Author");
                 Console.WriteLine("\n  2. Remove Book");
-                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine("  3. Return to Main Menu");
                 Console.ResetColor();
                 Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.DarkCyan;
                 Console.WriteLine("========================================");
                 Console.ResetColor();
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
                 Console.Write("Enter your choice: ");
+                Console.ResetColor();
 
                 if (int.TryParse(Console.ReadLine(), out int menuSel) && menuSel >= 1 && menuSel <= 3)
                 {
@@ -40,8 +42,10 @@ namespace LibrarySystem_DanielR
                 }
                 else
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Invalid input. Please enter a number between 1 and 3.\n");
-                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+                    Console.ResetColor();
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("Press any key to try again...");
                     Console.ResetColor();
                     Console.ReadKey();
@@ -65,10 +69,12 @@ namespace LibrarySystem_DanielR
                     Console.ResetColor();
                     return false; // Exit the RemoveMenu loop
                 default:
+                Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Invalid choice, please try again!");
+                    Console.ResetColor();
                     break;
             }
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("\nPress any key to continue...\n");
             Console.ResetColor();
             Console.ReadKey();

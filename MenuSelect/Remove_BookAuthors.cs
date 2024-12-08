@@ -3,58 +3,115 @@ using LibrarySystem_DanielR;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
-public class RemoveBook      // class to delete => targeted data => Library => CRUD => Delete
+public class RemoveBook // Class to delete => targeted data => Library => CRUD => Delete
 {
     public static void Run()
     {
         using (var context = new AppDbContext())
         {
-            var _books = context.Books.ToList();
-
-            foreach (var item in _books)
+            while (true) // Loop to allow retrying
             {
-                System.Console.WriteLine($"Title: {item.Title}, Published: {item.YearPublished} ID: {item.BookId}");
+                Console.Clear(); // Clear the console for readability
+
+                var _books = context.Books.ToList();
+
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("\nRemove Book from Library:\n");
+                Console.ResetColor();
+
+                if (!_books.Any())
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("No books found in the library.");
+                    Console.ResetColor();
+                    Console.WriteLine("\nPress any key to return...");
+                    Console.ReadKey();
+                    return; // Exit if no books exist
+                }
+
+                // Display books with formatting
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("ID     Title                            Year Published");
+                Console.WriteLine("----------------------------------------------------");
+                Console.ResetColor();
+
+                foreach (var item in _books)
+                {
+                    // Truncate titles longer than 30 characters
+                    var truncatedTitle = item.Title.Length > 30 ? item.Title.Substring(0, 27) + "..." : item.Title;
+                    Console.WriteLine($"{item.BookId,-6} {truncatedTitle,-30} {item.YearPublished}");
+                }
+
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.Write("\nEnter the ID of the book you want to remove (or press Enter to cancel): ");
+                Console.ResetColor();
+
+                var input = Console.ReadLine()?.Trim();
+                if (string.IsNullOrEmpty(input))
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("\nAction canceled. Returning to menu...");
+                    Console.ResetColor();
+                    Console.WriteLine("\nPress any key to return...");
+                    Console.ReadKey();
+                    return; // Exit the function if canceled
+                }
+
+                if (!int.TryParse(input, out var bookID))
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\nInvalid input. Please enter a valid numeric Book ID.");
+                    Console.ResetColor();
+                    Console.WriteLine("\nPress any key to try again...");
+                    Console.ReadKey();
+                    continue; // Retry the loop
+                }
+
+                var removeBook = context.Books.FirstOrDefault(b => b.BookId == bookID);
+
+                if (removeBook == null)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\nBook ID not found. Please try again.");
+                    Console.ResetColor();
+                    Console.WriteLine("\nPress any key to try again...");
+                    Console.ReadKey();
+                    continue; // Retry the loop
+                }
+
+                // Check for related BookAuthor entries
+                var matchedBookAuthor = context.BookAuthors
+                    .Where(ba => ba.BookID == bookID)
+                    .ToList();
+
+                if (matchedBookAuthor.Any())
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\nWarning - This book is linked to one or more authors and will be removed along with those connections.");
+                    Console.ResetColor();
+
+                    context.BookAuthors.RemoveRange(matchedBookAuthor);
+
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("\nPress any key to confirm removal...");
+                    Console.ResetColor();
+                    Console.ReadKey();
+                }
+
+                // Remove the book and save changes
+                context.Books.Remove(removeBook);
+                context.SaveChanges();
+
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine($"\nThe book '{removeBook.Title}' has been successfully removed from the library.");
+                Console.ResetColor();
+
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("\nPress any key to return...");
+                Console.ResetColor();
+                Console.ReadKey();
+                return; // Exit after successful removal
             }
-            
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
-            System.Console.WriteLine("\nEnter ID for the book you want to remove!");
-            Console.ResetColor();
-
-            var _input = Console.ReadLine();
-
-            if (!int.TryParse(_input, out var bookID))
-            {
-                System.Console.WriteLine("ID not found, please try again!");
-            }
-
-            var removeBook = context.Books.FirstOrDefault(b => b.BookId == bookID);
-
-            if (removeBook == null)
-            {
-                System.Console.WriteLine("ID not found, please try again!");
-                return;
-            }
-
-            var matchedBookAuthor = context.BookAuthors
-            .Where(ba => ba.BookID == bookID)
-            .ToList();
-
-            if (matchedBookAuthor.Any())
-            {
-                Console.WriteLine("Warning - Book has connection to multiple Authors and will be removed!");
-
-                context.BookAuthors.RemoveRange(matchedBookAuthor);
-
-                Console.WriteLine("Press any key to continue...");
-                Console.ReadLine();
-            }
-
-            context.Books.Remove(removeBook);
-            context.SaveChanges();
-
-            Console.WriteLine($"You have now erased following Book: {removeBook.Title}.");
-            Console.WriteLine("Press any key to continue...");
-            Console.ReadLine();
         }
     }
 }
@@ -65,60 +122,117 @@ public class RemoveAuthor
     {
         using (var context = new AppDbContext())
         {
-            var _author = context.Authors.ToList();
-
-            foreach (var item in _author)
+            while (true) // Loop to allow retrying
             {
-                Console.WriteLine($"Author ID: {item.AuthorId}, Name: {item.FirstName} {item.LastName}.");
-            }
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.WriteLine("\nEnter ID for the Author you want to remove:");
-            Console.ResetColor();
+                Console.Clear(); // Clear the console for better readability
 
-            var _input = Console.ReadLine()?.Trim();
+                var _authors = context.Authors.ToList();
 
-            if (!int.TryParse(_input, out var authorID))
-            {
-                Console.WriteLine("ID not found, please try again!");
-                return;
-            }
-
-            var removeAuthor = context.Authors.FirstOrDefault(a => a.AuthorId == authorID);
-            
-            if (removeAuthor == null)
-            {
-                Console.WriteLine("ID not found, please try again!");
-                return;
-            }
-
-            var matchedBookAuthor = context.BookAuthors
-            .Where(ba => ba.AuthorID == authorID)
-            .ToList();
-
-            if (matchedBookAuthor.Any())
-            {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("Warning - Author has connection to multiple books and will also be removed!");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("\nRemove Author from Library:\n");
                 Console.ResetColor();
 
-                context.BookAuthors.RemoveRange(matchedBookAuthor);
+                if (!_authors.Any())
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("No authors found in the library.");
+                    Console.ResetColor();
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("\nPress any key to return...");
+                    Console.ResetColor();
+                    Console.ReadKey();
+                    return; // Exit if no authors exist
+                }
+
+                // Display authors with formatted table
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("ID     Name");
+                Console.WriteLine("-------------------------------");
+                Console.ResetColor();
+
+                foreach (var item in _authors)
+                {
+                    Console.WriteLine($"{item.AuthorId,-6} {item.FirstName} {item.LastName}");
+                }
+
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
-                Console.WriteLine("\nPress any key to continue...");
+                Console.Write("\nEnter the ID of the author you want to remove (or press Enter to cancel): ");
                 Console.ResetColor();
-                Console.ReadLine();
+
+                var input = Console.ReadLine()?.Trim();
+                if (string.IsNullOrEmpty(input))
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\nAction canceled. Returning to menu...");
+                    Console.ResetColor();
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("\nPress any key to return...");
+                    Console.ResetColor();
+                    Console.ReadKey();
+                    return; // Exit the function if canceled
+                }
+
+                if (!int.TryParse(input, out var authorID))
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\nInvalid input. Please enter a valid numeric Author ID.");
+                    Console.ResetColor();
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("\nPress any key to try again...");
+                    Console.ResetColor();
+                    Console.ReadKey();
+                    continue; // Retry the loop
+                }
+
+                var removeAuthor = context.Authors.FirstOrDefault(a => a.AuthorId == authorID);
+
+                if (removeAuthor == null)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\nAuthor ID not found. Please try again.");
+                    Console.ResetColor();
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("\nPress any key to try again...");
+                    Console.ResetColor();
+                    Console.ReadKey();
+                    continue; // Retry the loop
+                }
+
+                // Check for related BookAuthor entries
+                var matchedBookAuthor = context.BookAuthors
+                    .Where(ba => ba.AuthorID == authorID)
+                    .ToList();
+
+                if (matchedBookAuthor.Any())
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("\nWarning - This author is linked to one or more books and the connections will also be removed.");
+                    Console.ResetColor();
+
+                    context.BookAuthors.RemoveRange(matchedBookAuthor);
+
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("\nPress any key to confirm removal...");
+                    Console.ResetColor();
+                    Console.ReadKey();
+                }
+
+                // Remove the author and save changes
+                context.Authors.Remove(removeAuthor);
+                context.SaveChanges();
+
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine($"\nThe author '{removeAuthor.FirstName} {removeAuthor.LastName}' has been successfully removed.");
+                Console.ResetColor();
+
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("\nPress any key to return...");
+                Console.ResetColor();
+                Console.ReadKey();
+                return; // Exit after successful removal
             }
-
-            context.Authors.Remove(removeAuthor);
-            context.SaveChanges();
-
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine($"\nYou have now erased following Author: {removeAuthor.FirstName} {removeAuthor.LastName}.");
-            Console.ResetColor();
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.WriteLine("\nPress any key to continue...");
-            Console.ResetColor();
-            
         }
     }
 }
+
 

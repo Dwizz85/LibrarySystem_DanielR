@@ -30,7 +30,7 @@ public class RemoveMember
             Console.ForegroundColor = ConsoleColor.DarkCyan;
             Console.WriteLine("========================================");
             Console.ResetColor();
-            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.Write("Enter your choice: ");
             Console.ResetColor();
 
@@ -43,7 +43,7 @@ public class RemoveMember
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("\nInvalid input. Please enter a number between 1 and 2.\n");
                 Console.ResetColor();
-                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("Press any key to try again...");
                 Console.ResetColor();
                 Console.ReadKey();
@@ -70,7 +70,7 @@ public class RemoveMember
                 break;
         }
 
-        Console.ForegroundColor = ConsoleColor.DarkGreen;
+        Console.ForegroundColor = ConsoleColor.Yellow;
         Console.WriteLine("\nPress any key to continue...");
         Console.ResetColor();
         Console.ReadKey();

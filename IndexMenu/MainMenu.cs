@@ -28,7 +28,7 @@ namespace LibrarySystem_DanielR
                 Console.WriteLine("  3. Library Listings");
                 Console.WriteLine("  4. Member Administration");
                 Console.WriteLine("  5. Library Administration\n");
-                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("  6. Exit Program");
                 Console.ResetColor();
                 Console.WriteLine();
@@ -50,41 +50,42 @@ namespace LibrarySystem_DanielR
                             ReturnBook.Run();
                             break;
                         case 3:
-                            var listingMenu = new ListingIndex();
-                            listingMenu.ListingMenu();
+                            ListingIndex.Run();
                             break;
                         case 4:
-                            var memberAdminMenu = new MemberAdminMenu();
-                            memberAdminMenu.MemberAdmin();
+                            MemberAdminMenu.Run();
                             break;
                         case 5:
-                            var libraryAdminMenu = new LibraryAdmin();
-                            libraryAdminMenu.LibraryAdminMenu();
+                            LibraryAdmin.Run();
                             break;
                         case 6:
-                            Console.ForegroundColor = ConsoleColor.DarkGreen;
-                            Console.WriteLine("\nExiting Program...\n");
-                            Console.ResetColor();
+                            // Console.ForegroundColor = ConsoleColor.Yellow;
+                            // Console.WriteLine("\nExiting Program...\n");
+                            // Console.ResetColor();
                             isRunning = false; // Exit the main menu loop
                             break;
                         default:
+                            Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine("Invalid choice. Please select a valid menu option.");
+                            Console.ResetColor();
                             break;
                     }
                 }
                 else
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Invalid input. Please enter a number.");
+                    Console.ResetColor();
                 }
 
                 // Pause before redisplaying the main menu
-                if (isRunning)
-                {
-                    Console.ForegroundColor = ConsoleColor.DarkGreen;
-                    Console.WriteLine("\nPress any key to return to the main menu...");
-                    Console.ResetColor();
-                    Console.ReadKey();
-                }
+                // if (isRunning)
+                // {
+                //     Console.ForegroundColor = ConsoleColor.Blue;
+                //     Console.WriteLine("\nPress any key to return to the main menu...");
+                //     Console.ResetColor();
+                //     Console.ReadKey();
+                // }
             }
         }
     }

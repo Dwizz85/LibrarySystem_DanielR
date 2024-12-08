@@ -6,7 +6,7 @@ namespace LibrarySystem_DanielR
 {
     public class ListingIndex
     {
-        public void ListingMenu()
+        public static void Run()
         {
             bool isRunning = true;
 
@@ -28,7 +28,7 @@ namespace LibrarySystem_DanielR
                 Console.WriteLine("  3. List Registered Books");
                 Console.WriteLine("  4. List Authors with Books");
                 Console.WriteLine("  5. List specific Author Books.\n");
-                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine("  6. Return to Main Menu");
                 Console.ResetColor();
                 Console.WriteLine();
@@ -48,7 +48,7 @@ namespace LibrarySystem_DanielR
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("\nInvalid input. Please enter a number between 1 and 6.\n");
                     Console.ResetColor();
-                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("Press any key to try again...");
                     Console.ResetColor();
                     Console.ReadKey();
@@ -56,7 +56,7 @@ namespace LibrarySystem_DanielR
             }
         }
 
-        public bool HandleInput(int menuSel)
+        public static bool HandleInput(int menuSel)
         {
             switch (menuSel)
             {
@@ -73,7 +73,7 @@ namespace LibrarySystem_DanielR
                     ListLibrary.Run();          // list authors with books
                     break;
                 case 5:
-                    BooksByAuthorListing.Run();
+                    BooksByAuthorListing.Run();     // Books listed by Authors
                     break;
                 case 6:
                     Console.ForegroundColor = ConsoleColor.Blue;
@@ -81,10 +81,12 @@ namespace LibrarySystem_DanielR
                     Console.ResetColor();
                     return false;               // Exit the ListingMenu loop
                 default:
+                Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Invalid choice. Please try again.");
+                    Console.ResetColor();
                     break;
             }
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("\nPress any key to continue...\n");
             Console.ResetColor();
             Console.ReadKey();

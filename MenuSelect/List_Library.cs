@@ -2,30 +2,54 @@ using System;
 using LibrarySystem_DanielR;
 using Microsoft.EntityFrameworkCore.Storage.Json;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
-public class ListLibrary            // class => lists => content => library
+
+public class ListLibrary // Class => Lists Books and Authors
 {
     public static void Run()
     {
         using (var context = new AppDbContext())
         {
-            var BookAuthor = context.Books      // join Authors & Books
-            .Include(ba => ba.BookAuthors)
-            .ThenInclude(a => a.Author)
-            .ToList();
-            Console.ForegroundColor = ConsoleColor.Blue;
-            System.Console.WriteLine("\nListing Books with Authors in Library:\n");
-            Console.ResetColor();
-            foreach (var _book in BookAuthor)
-            {
-                var _authors = _book.BookAuthors.Any()
-                ? string.Join(", ", _book.BookAuthors.Select(ba => $"{ba.Author.FirstName} {ba.Author.LastName}"))
-                : "No Authors";
+            Console.Clear();
 
-                System.Console.WriteLine($"Book ID:{_book.BookId,-10} Title: {_book.Title,-40} Year Published: {_book.YearPublished,-10} Author: {_authors,-10}");
-                
+            // Join Authors & Books
+            var bookAuthors = context.Books
+                .Include(b => b.BookAuthors)
+                .ThenInclude(ba => ba.Author)
+                .ToList();
+
+            if (!bookAuthors.Any())
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nNo books or authors found in the library.");
+                Console.ResetColor();
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("\nPress any key to return to the menu.");
+                Console.ResetColor();
+                Console.ReadKey();
+                return;
             }
+
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("\nListing Books with Authors in Library:\n");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Book ID  Title                            Year Published  Authors");
+            Console.WriteLine("-------------------------------------------------------------------");
+            Console.ResetColor();
+
+            foreach (var book in bookAuthors)
+            {
+                var authors = book.BookAuthors.Any()
+                    ? string.Join(", ", book.BookAuthors.Select(ba => $"{ba.Author.FirstName} {ba.Author.LastName}"))
+                    : "No Authors";
+
+                Console.WriteLine($"{book.BookId,-8} {book.Title,-30} {book.YearPublished,-15} {authors}");
+            }
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("\nPress any key to return to the menu.");
+            Console.ResetColor();
+            Console.ReadKey();
         }
     }
 }
@@ -37,36 +61,40 @@ public class LoanHistory
 
         using (var context = new AppDbContext())
         {
-            var loanHistory = context.Loans
-                .Include(l => l.Book)
-                .ThenInclude(b => b.BookAuthors)
-                .Include(l => l.Member)
-                .Select(lh => new
-                {
-                    lh.Book.Title,
-                    lh.Member.MemberID,
-                    lh.LoanDate,
-                    ReturnDate = lh.ReturnDate.ToString("yyyy-MM-dd") ?? "Not Returned",
-                    lh.IsReturned
-                })
-                .ToList();
+            
+                var loanHistory = context.Loans
+                    .Include(l => l.Book)
+                    .ThenInclude(b => b.BookAuthors)
+                    .Include(l => l.Member)
+                    .Select(lh => new
+                    {
+                        lh.Book.Title,
+                        lh.Member.MemberID,
+                        lh.LoanDate,
+                        ReturnDate = lh.ReturnDate.ToString("yyyy-MM-dd") ?? "Not Returned",
+                        lh.IsReturned
+                    })
+                    .ToList();
 
-            foreach (var item in loanHistory)
-            {
-                Console.ForegroundColor = ConsoleColor.Blue;
-                System.Console.WriteLine("\nLoan History:\n");
-                Console.ResetColor();
-                Console.WriteLine($"\n{"Title:",-15} {item.Title}");
-                Console.WriteLine($"{"Member ID:",-15} {item.MemberID}");
-                Console.WriteLine($"{"Loan Date:",-15} {item.LoanDate:yyyy-MM-dd}");
-                Console.WriteLine($"{"Return Date:",-15} {item.ReturnDate}");
-                Console.WriteLine($"{"Is Returned:",-15} {(item.IsReturned ? "Yes" : "No")}");
-                Console.WriteLine(new string('-', 40)); // Separator between record
-            }
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.WriteLine("\nLoan History:\n");
+                        Console.ResetColor();
+
+                        foreach (var item in loanHistory)
+                        {
+                            Console.WriteLine(new string('-', 40)); // Separator between record
+                            Console.WriteLine($"{"Title:",-15} {item.Title}");
+                            Console.WriteLine($"{"Member ID:",-15} {item.MemberID}");
+                            Console.WriteLine($"{"Loan Date:",-15} {item.LoanDate:yyyy-MM-dd}");
+                            Console.WriteLine($"{"Return Date:",-15} {item.ReturnDate}");
+                            Console.WriteLine($"{"Is Returned:",-15} {(item.IsReturned ? "Yes" : "No")}");
+                            Console.WriteLine(new string('-', 40)); // Separator between record
+                        }
             
         }
 
         Console.ReadLine();
+
     }
 }
 
@@ -74,46 +102,58 @@ public class ActiveLoans
 {
     public static void Run()
     {
+
         using (var context = new AppDbContext())
         {
-            // Fetch only active loans where IsReturned is false
-            var activeLoans = context.Loans
-                .Include(l => l.Book)
-                .ThenInclude(b => b.BookAuthors)
-                .Include(l => l.Member)
-                .Where(l => !l.IsReturned) // Filter for active loans
-                .Select(lh => new
-                {
-                    lh.Book.Title,
-                    lh.Member.MemberID,
-                    lh.LoanDate
-                })
-                .ToList();
 
-            // Check if there are active loans
-            if (!activeLoans.Any())
-            {   
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("\nNo active loans at the moment.");
-                Console.ResetColor();
-                return;
-            }
+                // Fetch only active loans where IsReturned is false
+                var activeLoans = context.Loans
+                    .Include(l => l.Book)
+                    .ThenInclude(b => b.BookAuthors)
+                    .Include(l => l.Member)
+                    .Where(l => !l.IsReturned) // Filter for active loans
+                    .Select(lh => new
+                    {
+                        lh.Book.Title,
+                        lh.Member.MemberID,
+                        lh.LoanDate
+                    })
+                    .ToList();
+
+
+
+                    // Check if there are active loans
+                    if (!activeLoans.Any())
+                    {   
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\nNo active loans at the moment.");
+                        Console.ResetColor();
+                        return;
+                    }
+
+
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("\nActive Loans:\n");
             Console.ResetColor();
 
-            // Display active loans
-            foreach (var loan in activeLoans)
-            {
-                Console.WriteLine($"{"Title:",-15} {loan.Title}");
-                Console.WriteLine($"{"Member ID:",-15} {loan.MemberID}");
-                Console.WriteLine($"{"Loan Date:",-15} {loan.LoanDate:yyyy-MM-dd}");
-                Console.WriteLine(new string('-', 40)); // Separator between records
-            }
 
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
+                    // Display active loans
+                    foreach (var loan in activeLoans)
+                    {
+
+                        Console.WriteLine($"{"Title:",-15} {loan.Title}");
+                        Console.WriteLine($"{"Member ID:",-15} {loan.MemberID}");
+                        Console.WriteLine($"{"Loan Date:",-15} {loan.LoanDate:yyyy-MM-dd}");
+                        Console.WriteLine(new string('-', 40)); // Separator between records
+
+                    }
+
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("\nPress any key to return to the menu.");
             Console.ResetColor();
+
+
         }
 
         Console.ReadLine();
@@ -126,6 +166,8 @@ public class BooksOnlyListing // Class to list only books
     {
         using (var context = new AppDbContext())
         {
+            Console.Clear();
+
             // Fetch all books
             var books = context.Books
                 .Select(b => new
@@ -142,17 +184,29 @@ public class BooksOnlyListing // Class to list only books
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("\nNo books found in the library.");
                 Console.ResetColor();
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("\nPress any key to return to the menu.");
+                Console.ResetColor();
+                Console.ReadKey();
                 return;
             }
+
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("\nListing Books in Library:\n");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Book ID  Title                            Year Published  Available");
+            Console.WriteLine("-------------------------------------------------------------------");
             Console.ResetColor();
 
             foreach (var book in books)
             {
-                Console.WriteLine($"Book ID: {book.BookId,-10} Title: {book.Title,-40} Year Published: {book.YearPublished,-10} Available: {(book.IsAvailable ? "Yes" : "No")}");
+                Console.WriteLine($"{book.BookId,-8} {book.Title,-30} {book.YearPublished,-15} {(book.IsAvailable ? "Yes" : "No")}");
             }
 
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("\nPress any key to return to the menu.");
+            Console.ResetColor();
+            Console.ReadKey();
         }
     }
 }
@@ -163,6 +217,8 @@ public class BooksByAuthorListing // Class to list books by a specific author
     {
         using (var context = new AppDbContext())
         {
+            Console.Clear();
+
             // Fetch all authors
             var authors = context.Authors
                 .OrderBy(a => a.LastName)
@@ -178,35 +234,52 @@ public class BooksByAuthorListing // Class to list books by a specific author
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("\nNo authors found in the library.");
                 Console.ResetColor();
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("\nPress any key to return to the menu.");
+                Console.ResetColor();
+                Console.ReadKey();
                 return;
             }
 
-            // Display list of authors
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("\nAuthors Available:\n");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Author ID  Name");
+            Console.WriteLine("-------------------------------");
             Console.ResetColor();
+
             foreach (var author in authors)
             {
-                Console.WriteLine($"Author ID: {author.AuthorId,-10} Name: {author.FullName}");
+                Console.WriteLine($"{author.AuthorId,-10} {author.FullName}");
             }
+
             Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.WriteLine("\nEnter the Author ID to view their books or press Enter to return:");
+            Console.Write("\nEnter the Author ID to view their books or press Enter to cancel: ");
             Console.ResetColor();
+
             var input = Console.ReadLine()?.Trim();
 
             if (string.IsNullOrEmpty(input))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("\nInvalid input. Returning to menu...");
+                Console.WriteLine("\nAction canceled. Returning to menu...");
                 Console.ResetColor();
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("\nPress any key to return to the menu.");
+                Console.ResetColor();
+                Console.ReadKey();
                 return;
             }
 
-            if (!int.TryParse(input, out int authorId))
+            if (!int.TryParse(input, out var authorId))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("\nInvalid Author ID. Returning to menu...");
                 Console.ResetColor();
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("\nPress any key to return to the menu.");
+                Console.ResetColor();
+                Console.ReadKey();
                 return;
             }
 
@@ -217,34 +290,41 @@ public class BooksByAuthorListing // Class to list books by a specific author
                 .Where(ba => ba.AuthorID == authorId)
                 .Select(ba => new
                 {
-                    ba.Book.Title,
                     ba.Book.BookId,
+                    ba.Book.Title,
                     ba.Book.YearPublished,
                     ba.Book.IsAvailable
                 })
                 .ToList();
 
             if (!books.Any())
-            {   
+            {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("\nNo books found for the selected author.");
                 Console.ResetColor();
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("\nPress any key to return to the menu.");
+                Console.ResetColor();
+                Console.ReadKey();
                 return;
             }
 
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine($"\nBooks by Author ID: {authorId}:\n");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Book ID  Title                            Year Published  Available");
+            Console.WriteLine("-------------------------------------------------------------------");
             Console.ResetColor();
 
             foreach (var book in books)
             {
-                Console.WriteLine($"Book ID: {book.BookId,-10} Title: {book.Title,-40} Year Published: {book.YearPublished,-10} Available: {(book.IsAvailable ? "Yes" : "No")}");
+                Console.WriteLine($"{book.BookId,-8} {book.Title,-30} {book.YearPublished,-15} {(book.IsAvailable ? "Yes" : "No")}");
             }
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("\nPress any key to return to the menu.");
             Console.ResetColor();
+            Console.ReadKey();
         }
-
-        Console.ReadKey();
     }
 }
