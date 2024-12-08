@@ -69,9 +69,6 @@ namespace LibrarySystem_DanielR
                     RemoveMember.Run();
                     break;
                 case 4:
-                    // Console.ForegroundColor = ConsoleColor.Blue;
-                    // Console.WriteLine("\nReturning to Main Menu...");
-                    // Console.ResetColor();
                     return false; // Exit the MemberAdmin loop
                 default:
                     Console.ForegroundColor = ConsoleColor.Red;

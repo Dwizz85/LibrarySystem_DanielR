@@ -88,6 +88,30 @@ public class Seed
                         IsAvailable = true
                     };
 
+                    var book10 = new Book
+                    {
+                        Title = "Coders Guide",
+                        YearPublished = 1615,
+                        IsAvailable = true
+                    };
+
+                    var book11 = new Book
+                    {
+                        Title = "Multiple Relations",
+                        YearPublished = 2024,
+                        IsAvailable = true
+                    };
+
+                    var book12 = new Book
+                    {
+                        Title = "PK & FK Intro",
+                        YearPublished = 2010,
+                        IsAvailable = true
+                    };
+
+
+
+
                     #endregion
 
                     #region Authors Information
@@ -157,6 +181,9 @@ public class Seed
                     context.Books.Add(book7);
                     context.Books.Add(book8);
                     context.Books.Add(book9);
+                    context.Books.Add(book10);
+                    context.Books.Add(book11);
+                    context.Books.Add(book12);
 
                     context.Authors.Add(author1);
                     context.Authors.Add(author2);
@@ -193,6 +220,9 @@ public class Seed
                             new BookAuthor {Book = book7, Author = author7},
                             new BookAuthor {Book = book8, Author = author8},
                             new BookAuthor {Book = book9, Author = author9},
+                            new BookAuthor {Book = book10, Author = author7},
+                            new BookAuthor {Book = book11, Author = author8},
+                            new BookAuthor {Book = book12, Author = author5},
                         };
 
                     // Ensure relationships are unique before adding

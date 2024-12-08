@@ -21,11 +21,12 @@ public class AddBook // Class => Add book => Create => CRUD
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
                 Console.WriteLine("Enter Title (or press Enter to cancel): ");
                 Console.ResetColor();
+                
                 var _title = Console.ReadLine()?.Trim();
 
                 if (string.IsNullOrEmpty(_title))
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("\nOperation canceled. Returning to menu...");
                     Console.ResetColor();
                     break; // Exit the loop
@@ -34,6 +35,7 @@ public class AddBook // Class => Add book => Create => CRUD
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
                 Console.WriteLine("\nEnter Year Published (yyyy):");
                 Console.ResetColor();
+
                 var _yearPublished = Console.ReadLine()?.Trim();
 
                 if (!int.TryParse(_yearPublished, out int YearPublished))
@@ -49,11 +51,12 @@ public class AddBook // Class => Add book => Create => CRUD
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine($"\nConfirm adding the book '{_title}' published in {YearPublished} (y/n):");
                 Console.ResetColor();
+
                 var confirmation = Console.ReadLine()?.Trim().ToLower();
 
                 if (confirmation != "y")
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("\nAction canceled. Returning to menu...");
                     Console.ResetColor();
                     break; // Exit the loop
@@ -100,20 +103,23 @@ public class AddAuthor
                     Console.ResetColor();
 
                     var _firstName = GetInput("Enter First Name (or press Enter to cancel):");
+
                     if (string.IsNullOrWhiteSpace(_firstName))
                     {
-                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine("\nOperation canceled. Returning to menu...");
                         Console.ResetColor();
                         break; // Exit the loop if canceled
                     }
 
                     var _lastName = GetInput("Enter Last Name:");
+
                     if (string.IsNullOrWhiteSpace(_lastName))
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("\nLast Name cannot be empty. Try again.");
+                        Console.WriteLine("\nLast Name cannot be empty. To try again press any key.");
                         Console.ResetColor();
+                        Console.ReadKey();
                         continue; // Retry the operation
                     }
 
@@ -127,13 +133,14 @@ public class AddAuthor
                     }
 
                     Console.ForegroundColor = ConsoleColor.Blue;
-                    Console.WriteLine($"\nConfirm adding the author '{_firstName} {_lastName}' (y/n):");
+                    Console.WriteLine($"\nConfirm adding author\n\nFirst Name: '{_firstName}\n\nLast Name: {_lastName}'\n\n (y/n):");
                     Console.ResetColor();
 
                     var confirmation = Console.ReadLine()?.Trim().ToLower();
+
                     if (confirmation != "y")
                     {
-                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine("\nAction canceled.");
                         Console.ResetColor();
                         continue; // Retry or exit based on user input
@@ -148,8 +155,9 @@ public class AddAuthor
 
                     context.Authors.Add(_author);
                     context.SaveChanges();
+
                     Console.ForegroundColor = ConsoleColor.Blue;
-                    Console.WriteLine($"\nThe Author '{_firstName} {_lastName}' has been added to the library!");
+                    Console.WriteLine($"\nThe Author: '{_firstName} {_lastName}' has been added to the library!");
                     Console.ResetColor();
 
                     // Exit the loop after successful addition

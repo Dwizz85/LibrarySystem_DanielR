@@ -23,7 +23,7 @@ public class RemoveMember
             Console.ResetColor();
             Console.WriteLine();
             Console.WriteLine("  1. View and Remove Member");
-            Console.ForegroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("\n  2. Cancel and Return to Main Menu");
             Console.ResetColor();
             Console.WriteLine();
@@ -86,33 +86,39 @@ public class RemoveMember
                 // Fetch all members from the database
                 var members = context.Members.ToList();
 
-                if (!members.Any())
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("\nNo members found in the database.");
-                    Console.ResetColor();
-                    return;
-                }
+                    if (!members.Any())
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine("\nNo members found in the database.");
+                        Console.ResetColor();
+                        return;
+                    }
 
                 // Display the list of members (no console clear here)
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine("\nListing Members:\n");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("ID       Name                          Email");
+                Console.WriteLine("--------------------------------------------------------------");
                 Console.ResetColor();
 
-                foreach (var member in members)
-                {
-                    Console.WriteLine($"Member ID: {member.MemberID,-10} Name: {member.FirstName} {member.LastName,-20} Email: {member.Email}");
-                }
+                    foreach (var member in members)
+                    {
+                        var truncatedName = $"{member.FirstName} {member.LastName}";
+                        var truncatedEmail = member.Email.Length > 30 ? member.Email.Substring(0, 27) + "..." : member.Email;
+
+                        Console.WriteLine($"{member.MemberID,-8} {truncatedName,-30} {truncatedEmail}");
+                    }
 
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
-                Console.WriteLine("\nEnter the Member ID to remove or press Enter to return:");
+                Console.WriteLine("\nEnter the Member ID to remove (or press Enter to return: )");
                 Console.ResetColor();
                 var input = Console.ReadLine()?.Trim();
 
                 if (string.IsNullOrEmpty(input))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("\nReturning to menu...");
+                    Console.WriteLine("\nInvalid choice. Returning to menu...");
                     Console.ResetColor();
                     return;
                 }
@@ -129,14 +135,14 @@ public class RemoveMember
                 var selectedMember = context.Members.FirstOrDefault(m => m.MemberID == memberId);
                 if (selectedMember == null)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine($"\nNo member found with ID {memberId}. Returning to menu...");
                     Console.ResetColor();
                     return;
                 }
 
                 // Confirm deletion
-                Console.ForegroundColor = ConsoleColor.Red;
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine($"\nAre you sure you want to remove member: {selectedMember.FirstName} {selectedMember.LastName} (ID: {selectedMember.MemberID})? (y/n)");
                 Console.ResetColor();
                 var confirmation = Console.ReadLine()?.Trim().ToLower();

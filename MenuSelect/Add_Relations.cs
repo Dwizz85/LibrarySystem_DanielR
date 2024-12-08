@@ -20,16 +20,13 @@ public class AddRelations   // Class to set relation => Book => Author
 
                 if (!books.Any())
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("No books found in the library.");
                     Console.ResetColor();
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("\nPress any key to return...");
-                    Console.ResetColor();
-                    Console.ReadKey();
                     return;
                 }
 
+                // Display books with formatted table
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Book ID  Title                            Year Published");
                 Console.WriteLine("-------------------------------------------------------");
@@ -37,7 +34,10 @@ public class AddRelations   // Class to set relation => Book => Author
 
                 foreach (var book in books)
                 {
-                    Console.WriteLine($"{book.BookId,-8} {book.Title,-30} {book.YearPublished,-15}");
+                    // Truncate the title if it exceeds a specific length (optional)
+                    var formattedTitle = book.Title.Length > 30 ? book.Title.Substring(0, 27) + "..." : book.Title;
+
+                    Console.WriteLine($"{book.BookId,-8} {formattedTitle,-30} {book.YearPublished,-15}");
                 }
 
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
@@ -45,13 +45,11 @@ public class AddRelations   // Class to set relation => Book => Author
                 Console.ResetColor();
 
                 var bookInput = Console.ReadLine()?.Trim();
+                
                 if (string.IsNullOrEmpty(bookInput))
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("\nAction canceled. Returning to menu...");
-                    Console.ResetColor();
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("\nPress any key to return...");
+                    Console.WriteLine("\nAction canceled. Press any key to continue.");
                     Console.ResetColor();
                     Console.ReadKey();
                     return;
@@ -60,10 +58,7 @@ public class AddRelations   // Class to set relation => Book => Author
                 if (!int.TryParse(bookInput, out var bookID) || !books.Any(b => b.BookId == bookID))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("\nInvalid Book ID. Please try again.");
-                    Console.ResetColor();
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("\nPress any key to retry...");
+                    Console.WriteLine("\nInvalid Book ID. To try again press any key.");
                     Console.ResetColor();
                     Console.ReadKey();
                     continue;
@@ -71,28 +66,25 @@ public class AddRelations   // Class to set relation => Book => Author
 
                 // Display all authors with a formatted table
                 Console.Clear();
+
                 var authors = context.Authors.ToList();
 
                 if (!authors.Any())
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("No authors found in the library.");
-                    Console.ResetColor();
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("\nPress any key to return...");
+                    Console.WriteLine("\nNo authors found in the library.");
                     Console.ResetColor();
-                    Console.ReadKey();
                     return;
                 }
 
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("Author ID  Name");
-                Console.WriteLine("-------------------------------");
+                Console.WriteLine("ID         Name");
+                Console.WriteLine("--------------------------------");
                 Console.ResetColor();
 
                 foreach (var author in authors)
                 {
-                    Console.WriteLine($"{author.AuthorId,-10} {author.FirstName} {author.LastName}");
+                    Console.WriteLine($"{author.AuthorId,-10} {author.FirstName,-15} {author.LastName}");
                 }
 
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
@@ -100,13 +92,11 @@ public class AddRelations   // Class to set relation => Book => Author
                 Console.ResetColor();
 
                 var authorInput = Console.ReadLine()?.Trim();
+                
                 if (string.IsNullOrEmpty(authorInput))
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("\nAction canceled. Returning to menu...");
-                    Console.ResetColor();
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("\nPress any key to return...");
+                    Console.WriteLine("\nAction canceled. Press any key to continue.");
                     Console.ResetColor();
                     Console.ReadKey();
                     return;
@@ -115,10 +105,7 @@ public class AddRelations   // Class to set relation => Book => Author
                 if (!int.TryParse(authorInput, out var authorID) || !authors.Any(a => a.AuthorId == authorID))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("\nInvalid Author ID. Please try again.");
-                    Console.ResetColor();
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("\nPress any key to retry...");
+                    Console.WriteLine("\nInvalid Author ID. To try again press any key.");
                     Console.ResetColor();
                     Console.ReadKey();
                     continue;
@@ -144,7 +131,7 @@ public class AddRelations   // Class to set relation => Book => Author
                 }
 
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("\nPress any key to return...");
+                Console.WriteLine("\nAction complete. Press any key to return.");
                 Console.ResetColor();
                 Console.ReadKey();
                 return;

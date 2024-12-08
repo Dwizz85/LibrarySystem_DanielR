@@ -27,9 +27,10 @@ namespace LibrarySystem_DanielR
                 Console.WriteLine("  2. List Loan History");
                 Console.WriteLine("  3. List Registered Books");
                 Console.WriteLine("  4. List Authors with Books");
-                Console.WriteLine("  5. List specific Author Books.\n");
+                Console.WriteLine("  5. List specific Author with Books.");
+                Console.WriteLine("  6. List specific Books with Authors.\n");
                 Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine("  6. Return to Main Menu");
+                Console.WriteLine("  7. Return to Main Menu");
                 Console.ResetColor();
                 Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.DarkCyan;
@@ -39,14 +40,14 @@ namespace LibrarySystem_DanielR
                 Console.Write("Enter your choice: ");
                 Console.ResetColor();
 
-                if (int.TryParse(Console.ReadLine(), out int menuSel) && menuSel >= 1 && menuSel <= 6)
+                if (int.TryParse(Console.ReadLine(), out int menuSel) && menuSel >= 1 && menuSel <= 7)
                 {
                     isRunning = HandleInput(menuSel);
                 }
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("\nInvalid input. Please enter a number between 1 and 6.\n");
+                    Console.WriteLine("\nInvalid input. Please enter a number between 1 and 7.\n");
                     Console.ResetColor();
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("Press any key to try again...");
@@ -76,20 +77,17 @@ namespace LibrarySystem_DanielR
                     BooksByAuthorListing.Run();     // Books listed by Authors
                     break;
                 case 6:
-                    Console.ForegroundColor = ConsoleColor.Blue;
-                    Console.WriteLine("\nReturning to Main Menu...");
-                    Console.ResetColor();
+                    AuthorsByBookListing.Run();
+                    break;
+                case 7:
                     return false;               // Exit the ListingMenu loop
                 default:
-                Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Invalid choice. Please try again.");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\nInvalid choice. Please try again.");
                     Console.ResetColor();
                     break;
             }
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("\nPress any key to continue...\n");
-            Console.ResetColor();
-            Console.ReadKey();
+
             return true; // Keep the loop running
         }
     }

@@ -59,9 +59,6 @@ namespace LibrarySystem_DanielR
                             LibraryAdmin.Run();
                             break;
                         case 6:
-                            // Console.ForegroundColor = ConsoleColor.Yellow;
-                            // Console.WriteLine("\nExiting Program...\n");
-                            // Console.ResetColor();
                             isRunning = false; // Exit the main menu loop
                             break;
                         default:
@@ -78,14 +75,6 @@ namespace LibrarySystem_DanielR
                     Console.ResetColor();
                 }
 
-                // Pause before redisplaying the main menu
-                // if (isRunning)
-                // {
-                //     Console.ForegroundColor = ConsoleColor.Blue;
-                //     Console.WriteLine("\nPress any key to return to the main menu...");
-                //     Console.ResetColor();
-                //     Console.ReadKey();
-                // }
             }
         }
     }

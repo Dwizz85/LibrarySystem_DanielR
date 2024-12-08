@@ -27,11 +27,6 @@ public class LoanBook   // Class to loan => book => relate => member
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("\nNo books available for loan at this moment!");
                     Console.ResetColor();
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("\nPress any key to return to the menu...");
-                    Console.ResetColor();
-                    Console.ReadKey();
-                    return;
                 }
 
                 foreach (var _book in Books)
@@ -50,10 +45,6 @@ public class LoanBook   // Class to loan => book => relate => member
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("\nAction canceled. Returning to menu...");
                     Console.ResetColor();
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("\nPress any key to return...");
-                    Console.ResetColor();
-                    Console.ReadKey();
                     return;
                 }
 
@@ -91,10 +82,6 @@ public class LoanBook   // Class to loan => book => relate => member
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("\nNo members found in the system.");
                     Console.ResetColor();
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("\nPress any key to return to the menu...");
-                    Console.ResetColor();
-                    Console.ReadKey();
                     return;
                 }
 
@@ -117,10 +104,6 @@ public class LoanBook   // Class to loan => book => relate => member
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("\nAction canceled. Returning to menu...");
                     Console.ResetColor();
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("\nPress any key to return...");
-                    Console.ResetColor();
-                    Console.ReadKey();
                     return;
                 }
 
@@ -163,10 +146,6 @@ public class LoanBook   // Class to loan => book => relate => member
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("\nLoan canceled.");
                     Console.ResetColor();
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("\nPress any key to return...");
-                    Console.ResetColor();
-                    Console.ReadKey();
                     return;
                 }
 
@@ -235,10 +214,6 @@ public class ReturnBook
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("\nNo books are currently loaned out.");
                     Console.ResetColor();
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("\nPress any key to return to the menu...");
-                    Console.ResetColor();
-                    Console.ReadKey();
                     return; // Exit the function if no loans exist
                 }
 
@@ -260,10 +235,6 @@ public class ReturnBook
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("\nAction canceled. Returning to menu...");
                     Console.ResetColor();
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("\nPress any key to return...");
-                    Console.ResetColor();
-                    Console.ReadKey();
                     return; // Exit the loop if canceled
                 }
 
@@ -309,10 +280,6 @@ public class ReturnBook
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("\nReturn canceled.");
                     Console.ResetColor();
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("\nPress any key to return...");
-                    Console.ResetColor();
-                    Console.ReadKey();
                     return; // Exit the loop if canceled
                 }
 

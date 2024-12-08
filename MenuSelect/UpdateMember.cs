@@ -85,45 +85,50 @@ public class UpdateMember
 
                 // Display the list of members
                 Console.Clear();
+
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine("Listing Members:\n");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("ID       Name                           Email");
+                Console.WriteLine("------------------------------------------------------");
                 Console.ResetColor();
 
-                foreach (var member in members)
-                {
-                    Console.WriteLine($"Member ID: {member.MemberID,-10} Name: {member.FirstName} {member.LastName,-20} Email: {member.Email}");
-                }
+                    foreach (var member in members)
+                    {
+                        Console.WriteLine($"{member.MemberID,-8} {member.FirstName,-15} {member.LastName,-15} {member.Email}");
+                    }
 
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
-                Console.WriteLine("\nEnter the Member ID to update or press Enter to return:");
+                Console.WriteLine("\nEnter the Member ID to update (or press Enter to return)");
                 Console.ResetColor();
                 var input = Console.ReadLine()?.Trim();
 
-                if (string.IsNullOrEmpty(input))
-                {
-                    Console.ForegroundColor = ConsoleColor.Blue;
-                    Console.WriteLine("\nReturning to menu...");
-                    Console.ResetColor();
-                    return true; // Keep the loop running
-                }
+                    if (string.IsNullOrEmpty(input))
+                    {
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.WriteLine("\nReturning to menu...");
+                        Console.ResetColor();
+                        return true; // Keep the loop running
+                    }
 
-                if (!int.TryParse(input, out int memberId))
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("\nInvalid Member ID. Returning to menu...");
-                    Console.ResetColor();
-                    return true; // Keep the loop running
-                }
+                    if (!int.TryParse(input, out int memberId))
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\nInvalid Member ID. Returning to menu...");
+                        Console.ResetColor();
+                        return true; // Keep the loop running
+                    }
 
                 // Fetch the member by ID
                 var selectedMember = context.Members.FirstOrDefault(m => m.MemberID == memberId);
-                if (selectedMember == null)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"\nNo member found with ID {memberId}. Returning to menu...");
-                    Console.ResetColor();
-                    return true; // Keep the loop running
-                }
+
+                    if (selectedMember == null)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine($"\nNo member found with ID {memberId}. Returning to menu...");
+                        Console.ResetColor();
+                        return true; // Keep the loop running
+                    }
 
                 // Perform the appropriate update based on menu selection
                 switch (menuSel)
@@ -171,21 +176,22 @@ public class UpdateMember
         Console.ForegroundColor = ConsoleColor.DarkGreen;
         Console.WriteLine("\nEnter new First Name:");
         Console.ResetColor();
+
         var newFirstName = Console.ReadLine()?.Trim();
 
-        if (string.IsNullOrWhiteSpace(newFirstName))
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("\nInvalid input. First Name not updated.");
-            Console.ResetColor();
-        }
-        else
-        {
-            selectedMember.FirstName = newFirstName;
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine($"\nFirst Name updated to {newFirstName}.");
-            Console.ResetColor();
-        }
+            if (string.IsNullOrWhiteSpace(newFirstName))
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nInvalid input. First Name not updated.");
+                Console.ResetColor();
+            }
+            else
+            {
+                selectedMember.FirstName = newFirstName;
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine($"\nFirst Name updated to {newFirstName}.");
+                Console.ResetColor();
+            }
     }
 
     private static void UpdateLastName(Member selectedMember)
@@ -193,21 +199,22 @@ public class UpdateMember
         Console.ForegroundColor = ConsoleColor.DarkGreen;
         Console.WriteLine("\nEnter new Last Name:");
         Console.ResetColor();
+
         var newLastName = Console.ReadLine()?.Trim();
 
-        if (string.IsNullOrWhiteSpace(newLastName))
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("\nInvalid input. Last Name not updated.");
-            Console.ResetColor();
-        }
-        else
-        {
-            selectedMember.LastName = newLastName;
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine($"\nLast Name updated to {newLastName}.");
-            Console.ResetColor();
-        }
+            if (string.IsNullOrWhiteSpace(newLastName))
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nInvalid input. Last Name not updated.");
+                Console.ResetColor();
+            }
+            else
+            {
+                selectedMember.LastName = newLastName;
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine($"\nLast Name updated to {newLastName}.");
+                Console.ResetColor();
+            }
     }
 
     private static void UpdateEmail(Member selectedMember)
@@ -215,20 +222,21 @@ public class UpdateMember
         Console.ForegroundColor = ConsoleColor.DarkGreen;
         Console.WriteLine("\nEnter new Email:");
         Console.ResetColor();
+
         var newEmail = Console.ReadLine()?.Trim();
 
-        if (string.IsNullOrWhiteSpace(newEmail) || !newEmail.Contains("@"))
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("\nInvalid email format. Email not updated.");
-            Console.ResetColor();
-        }
-        else
-        {
-            selectedMember.Email = newEmail;
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine($"\nEmail updated to {newEmail}.");
-            Console.ResetColor();
-        }
+            if (string.IsNullOrWhiteSpace(newEmail) || !newEmail.Contains("@"))
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nInvalid email format. Email not updated.");
+                Console.ResetColor();
+            }
+            else
+            {
+                selectedMember.Email = newEmail;
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine($"\nEmail updated to {newEmail}.");
+                Console.ResetColor();
+            }
     }
 }

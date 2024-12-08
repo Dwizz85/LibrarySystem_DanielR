@@ -21,7 +21,7 @@ public class RemoveBook // Class to delete => targeted data => Library => CRUD =
 
                 if (!_books.Any())
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("No books found in the library.");
                     Console.ResetColor();
                     Console.WriteLine("\nPress any key to return...");
@@ -50,9 +50,8 @@ public class RemoveBook // Class to delete => targeted data => Library => CRUD =
                 if (string.IsNullOrEmpty(input))
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("\nAction canceled. Returning to menu...");
+                    Console.WriteLine("\nAction canceled. Press any key to continue.");
                     Console.ResetColor();
-                    Console.WriteLine("\nPress any key to return...");
                     Console.ReadKey();
                     return; // Exit the function if canceled
                 }
@@ -71,7 +70,7 @@ public class RemoveBook // Class to delete => targeted data => Library => CRUD =
 
                 if (removeBook == null)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("\nBook ID not found. Please try again.");
                     Console.ResetColor();
                     Console.WriteLine("\nPress any key to try again...");
@@ -134,7 +133,7 @@ public class RemoveAuthor
 
                 if (!_authors.Any())
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("No authors found in the library.");
                     Console.ResetColor();
                     Console.ForegroundColor = ConsoleColor.Yellow;
@@ -146,13 +145,14 @@ public class RemoveAuthor
 
                 // Display authors with formatted table
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("ID     Name");
-                Console.WriteLine("-------------------------------");
+                Console.WriteLine("ID     Name                          ");
+                Console.WriteLine("-------------------------------------");
                 Console.ResetColor();
 
                 foreach (var item in _authors)
                 {
-                    Console.WriteLine($"{item.AuthorId,-6} {item.FirstName} {item.LastName}");
+                    var fullName = $"{item.FirstName} {item.LastName}";
+                    fullName = fullName.Length > 30 ? fullName.Substring(0, 27) + "..." : fullName;
                 }
 
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
@@ -162,11 +162,8 @@ public class RemoveAuthor
                 var input = Console.ReadLine()?.Trim();
                 if (string.IsNullOrEmpty(input))
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("\nAction canceled. Returning to menu...");
-                    Console.ResetColor();
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("\nPress any key to return...");
+                    Console.WriteLine("\nAction canceled. Press any key to continue.");
                     Console.ResetColor();
                     Console.ReadKey();
                     return; // Exit the function if canceled
@@ -188,7 +185,7 @@ public class RemoveAuthor
 
                 if (removeAuthor == null)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("\nAuthor ID not found. Please try again.");
                     Console.ResetColor();
                     Console.ForegroundColor = ConsoleColor.Yellow;

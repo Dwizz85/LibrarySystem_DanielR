@@ -18,14 +18,12 @@ namespace LibrarySystem_DanielR
                 return; // Exit the program if seeding fails
             }
 
-            // Instantiate MainMenuIndex
-            
             
             // // Instantiate IntroPage and Run
             // var introPage = new IntroPage();
             // introPage.ShowIntro();
 
-            // Run the Main Menu
+            // Instantiate MainMenuIndex & Run the Main Menu
             var mainMenuIndex = new MainMenuIndex(); // Create an instance
             mainMenuIndex.MainMenu(); // Call the instance method
 
